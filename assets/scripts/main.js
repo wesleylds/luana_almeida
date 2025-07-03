@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = document.createElement('div');
           card.className = 'imovel';
           card.innerHTML = `
-            <a href="detalhes.html?id=${imovel.id}"><img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img"></a>
+            <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img">
             <div class="imovel-info">
                 <h3 class="titulo-imovel">${imovel.titulo}</h3>
                 <span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span>
@@ -323,10 +323,20 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = document.createElement('div');
           card.className = 'imovel';
           card.innerHTML = `
-            <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}">
+            <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img">
             <div class="imovel-info">
-                <h3>${imovel.titulo}</h3>
-                <a href="detalhes.html?id=${imovel.id}">Ver Detalhes</a>
+                <h3 class="titulo-imovel">${imovel.titulo}</h3>
+                <span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span>
+                <ul class="detalhes-lista">
+                    <li><span class="icon"><i class="fas fa-home"></i></span> <strong>Tipo:</strong> ${imovel.tipo ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-bed"></i></span> <strong>Quartos:</strong> ${imovel.quartos ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-couch"></i></span> <strong>Salas:</strong> ${imovel.salas ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-bath"></i></span> <strong>Banheiros:</strong> ${imovel.banheiros ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-ruler-combined"></i></span> <strong>Área:</strong> ${imovel.area ?? '-'} m²</li>
+                    <li><span class="icon"><i class="fas fa-map-marker-alt"></i></span> <strong>Localização:</strong> ${imovel.localizacao ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-dollar-sign"></i></span> <strong>Preço:</strong> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</li>
+                </ul>
+                <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
             </div>
           `;
           novosContainer.appendChild(card);
