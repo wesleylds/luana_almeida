@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://luana-almeida-site.onrender.com';
 
 function getIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
