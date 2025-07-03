@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre em contato com a Luana Almeida Imóveis para encontrar o imóvel perfeito.">
+    <title>Luana Almeida Imóveis - Contato</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+    #contato {
+      max-width: 1000px;
+      margin: 40px auto 32px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 32px 24px;
+    }
+    .contato-content {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contato-foto.destaque-foto {
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .foto-luana.vertical {
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .contato-info.card-contato {
+      flex: 2;
+      min-width: 280px;
+      background: #f8f8f8;
+      border-radius: 12px;
+      padding: 28px 24px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    @media (max-width: 900px) {
+      .contato-content { flex-direction: column; gap: 18px; }
+      .contato-foto.destaque-foto, .contato-info.card-contato { max-width: 100%; }
+      #contato { padding: 18px 4vw; }
+    }
+    .sobre-content, .contato-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .sobre-foto, .contato-foto {
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .foto-luana.vertical {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .sobre-texto, .contato-banner-texto {
+      flex: 2;
+      min-width: 280px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .cta-sobre, .cta-contato {
+      display: inline-block;
+      background: #25d366;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      margin-bottom: 18px;
+      margin-top: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-sobre:hover, .cta-contato:hover {
+      background: #1ebe5d;
+    }
+    @media (max-width: 900px) {
+      .sobre-content, .contato-banner-content { flex-direction: column; gap: 18px; }
+      .sobre-foto, .contato-foto, .sobre-texto, .contato-banner-texto { max-width: 100%; }
+    }
+    .contato-foto.destaque-foto img,
+    .sobre-foto img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      display: block;
+      max-width: 320px;
+      max-height: 340px;
+    }
+    @media (max-width: 900px) {
+      .contato-foto.destaque-foto img,
+      .sobre-foto img {
+        height: 220px;
+        max-width: 98vw;
+        max-height: 220px;
+      }
+    }
+    .sobre-foto, .contato-foto.destaque-foto {
+      flex: 1;
+      min-width: 250px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .sobre-foto img, .contato-foto.destaque-foto img {
+      width: 100%;
+      height: auto;
+      object-fit: scale-down;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      display: block;
+      max-width: 320px;
+      max-height: 100%;
+    }
+    </style>
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+    <header class="header-principal">
+        <div class="header-container">
+            <div class="header-logo-nome">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Luana Almeida Imóveis" class="logo-img">
+                </a>
+                <a href="index.html" style="text-decoration: none;">
+                    <span class="nome-empresa">Luana Almeida Imóveis</span>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="imoveis.html">Imóveis</a></li>
+                    <li><a href="about.html">Sobre Nós</a></li>
+                    <li><a href="contact.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="contato">
+        <h2 class="titulo-contato-destaque"><i class="fa fa-envelope-open-text"></i> Entre em Contato</h2>
+        <div class="contato-content">
+            <div class="contato-foto destaque-foto">
+                <img src="assets/images/luana1.jpeg" alt="Foto de Luana Almeida" class="foto-luana vertical">
+            </div>
+            <div class="contato-info card-contato">
+                <p class="texto-contato">Estamos prontos para ajudar você a encontrar o imóvel dos seus sonhos.<br>Fale diretamente pelo WhatsApp ou pelas redes sociais abaixo:</p>
+                <a href="https://wa.me/5516993394135?text=Olá!%20Tenho%20interesse%20em%20um%20imóvel." target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Fale pelo WhatsApp</a>
+                <div class="contato-redes">
+                    <a href="https://www.instagram.com/luana.almeida_corretora?igsh=bzQ5ZGJkajk0anJw" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="margin-top: auto;">
+        <p>© 2025 Luana Almeida Imóveis. Apenas anúncios, sem vendas diretas.</p>
+        <p>Entre em contato: <a href="https://wa.me/5516993394135" target="_blank">WhatsApp</a></p>
+        <div class="social-media">
+            <a href="https://www.instagram.com/luana.almeida_corretora?igsh=bzQ5ZGJkajk0anJw" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank">Facebook</a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/scripts/main.js"></script>
+    <script>
+    document.getElementById('contato-form').onsubmit = function(e) {
+        e.preventDefault();
+        document.getElementById('feedback-contato').innerText = 'Mensagem enviada! Em breve entraremos em contato.';
+        this.reset();
+    };
+    </script>
+</body>
+</html>

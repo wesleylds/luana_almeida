@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Administração de Imóveis 🏠</title>
+  <link rel="stylesheet" href="assets/styles/admin.css">
+</head>
+<body>
+  <button id="btn-logout" style="position:fixed;top:18px;right:24px;background:#ff6b35;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-weight:600;cursor:pointer;z-index:9999;">Sair</button>
+  <header>
+    <h1>🏠 Painel de Administração
+      <button id="toggle-dark" title="Alternar modo escuro/claro" style="float:right;font-size:1.3em;background:none;border:none;cursor:pointer;">🌙</button>
+    </h1>
+  </header>
+  <div id="mensagem-feedback" style="display:none;"></div>
+  <main>
+    <section class="admin-form-section">
+      <h2>➕ Adicionar/Editar Imóvel</h2>
+      <form id="imovel-form" enctype="multipart/form-data">
+        <input type="hidden" id="imovel-id" name="imovel-id">
+        <label for="titulo">Título do Imóvel <span style="color:#ff9900;">*</span></label>
+        <input type="text" id="titulo" name="titulo" placeholder="Ex: Casa com piscina" required>
+        <label for="tipo">Tipo <span style="color:#ff9900;">*</span></label>
+        <select id="tipo" name="tipo" required>
+          <option value="">Selecione o tipo</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+        <label for="preco">Preço (R$) <span style="color:#ff9900;">*</span></label>
+        <input type="text" id="preco" name="preco" placeholder="Ex: 350.000,00" required autocomplete="off" inputmode="decimal">
+        <small style="color:#888;margin-bottom:8px;display:block;">Digite apenas números. O valor será formatado automaticamente para reais.</small>
+        <label for="quartos">Quartos <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="quartos" name="quartos" placeholder="Ex: 3" required min="0">
+        <label for="salas">Salas <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="salas" name="salas" placeholder="Ex: 2" required min="0">
+        <label for="banheiros">Banheiros <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="banheiros" name="banheiros" placeholder="Ex: 2" required min="0">
+        <label for="area">Área (m²) <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="area" name="area" placeholder="Ex: 120" required min="1">
+        <label for="localizacao">Localização <span style="color:#ff9900;">*</span></label>
+        <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Centro, Ribeirão Preto" required>
+        <label for="descricao">Descrição <span style="color:#ff9900;">*</span></label>
+        <textarea id="descricao" name="descricao" placeholder="Ex: Imóvel amplo, bem localizado, com área de lazer completa." required></textarea>
+        <label>📷 Imagens do Imóvel (a primeira será a fachada, as demais vão para o carrossel):
+          <input type="file" id="fotos-imovel" name="imagens" accept="image/*" multiple>
+        </label>
+        <div id="preview-fachada" class="preview-img"></div>
+        <div id="preview-carrossel" class="preview-img"></div>
+        <button type="submit">➕ Salvar Imóvel</button>
+        <button type="button" id="cancelar-edicao" style="display:none;">❌ Cancelar</button>
+      </form>
+    </section>
+    <section class="admin-list-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto 10px auto;">
+        <div id="contador-imoveis" style="font-size:1.2em;">🏠 0 imóveis</div>
+        <button id="limpar-tudo" title="Limpar todos os imóveis" style="background:#dc3545;color:#fff;padding:6px 16px;border-radius:6px;font-size:1em;cursor:pointer;">🧹 Limpar Tudo</button>
+      </div>
+      <input type="text" id="busca-rapida" placeholder="🔎 Buscar por título ou localização..." style="width:100%;max-width:400px;margin:0 auto 20px auto;display:block;padding:8px 12px;border-radius:6px;border:1px solid #ccc;">
+      <h2>📋 Imóveis Cadastrados</h2>
+      <div id="lista-imoveis"></div>
+    </section>
+    <div id="confirmacao-animada" style="display:none;"></div>
+  </main>
+  <script src="assets/scripts/admin.js"></script>
+  <script>
+    const toggleDark = document.getElementById('toggle-dark');
+    let modoEscuro = false;
+    if (toggleDark) {
+        toggleDark.onclick = () => {
+            modoEscuro = !modoEscuro;
+            document.body.classList.toggle('dark', modoEscuro);
+            toggleDark.textContent = modoEscuro ? '☀️' : '🌙';
+        };
+    }
+  </script>
+  <script>
+  // Máscara de moeda para o campo preço
+  const precoInput = document.getElementById('preco');
+  precoInput.addEventListener('input', function(e) {
+    let v = this.value.replace(/\D/g, '');
+    v = (v/100).toFixed(2) + '';
+    v = v.replace('.', ',');
+    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    this.value = v;
+  });
+  </script>
+  <script>
+  document.getElementById('btn-logout').onclick = function() {
+      localStorage.removeItem('admin_auth');
+      window.location.href = 'login.html';
+  };
+  </script>
+</body>
+</html> 

@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}

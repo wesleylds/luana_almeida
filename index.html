@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Luana Almeida Imóveis - Encontre o imóvel perfeito em São Paulo.">
+    <title>Luana Almeida Imóveis 🏠</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.seusite.com.br/">
+    <meta property="og:title" content="Luana Almeida Imóveis - Encontre o imóvel perfeito">
+    <meta property="og:description" content="Casas, apartamentos e terrenos em São Paulo. Atendimento personalizado e oportunidades únicas.">
+    <meta property="og:image" content="https://www.seusite.com.br/assets/images/logo.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.seusite.com.br/">
+    <meta name="twitter:title" content="Luana Almeida Imóveis - Encontre o imóvel perfeito">
+    <meta name="twitter:description" content="Casas, apartamentos e terrenos em São Paulo. Atendimento personalizado e oportunidades únicas.">
+    <meta name="twitter:image" content="https://www.seusite.com.br/assets/images/logo.png">
+</head>
+<body>
+    <header class="header-principal">
+        <div class="header-container">
+            <div class="header-logo-nome">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Luana Almeida Imóveis" class="logo-img">
+                </a>
+                <a href="index.html" style="text-decoration: none;">
+                    <span class="nome-empresa">Luana Almeida Imóveis</span>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="imoveis.html">Imóveis</a></li>
+                    <li><a href="about.html">Sobre Nós</a></li>
+                    <li><a href="contact.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="swiper banner-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="assets/images/luana1.jpeg" class="banner-img" alt="Luana Almeida Imóveis">
+                <div class="banner-texto">
+                    <div class="banner-texto-bg">
+                        <h1>Encontre o <span>imóvel dos seus sonhos!</span></h1>
+                        <p>Atendimento exclusivo e personalizado para você!<br>Casas, apartamentos e terrenos com as <b>melhores opções</b> do mercado.</p>
+                        <a href="https://wa.me/5516993394135" target="_blank" class="cta" aria-label="Falar com a Luana no WhatsApp">Quero meu imóvel!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="assets/images/luana2.jpeg" class="banner-img" alt="Luana Almeida Imóveis">
+                <div class="banner-texto">
+                    <div class="banner-texto-bg">
+                        <h1>Realize seu <span>sonho da casa própria!</span></h1>
+                        <p>Conte com nossa experiência e dedicação!<br>A <b>Luana Almeida Imóveis</b> te ajuda a encontrar o lar perfeito.</p>
+                        <a href="https://wa.me/5516993394135" target="_blank" class="cta">Fazer orçamento!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="assets/images/luana3.jpeg" class="banner-img" alt="Luana Almeida Imóveis">
+                <div class="banner-texto">
+                    <div class="banner-texto-bg">
+                        <h1>Invista no seu <span>futuro hoje!</span></h1>
+                        <p>Oportunidades únicas e imóveis de qualidade!<br>Seja para morar ou investir, temos a <b>solução ideal</b> para você.</p>
+                        <a href="https://wa.me/5516993394135" target="_blank" class="cta">Ver oportunidades!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </section>
+
+    <section class="banner-imoveis">
+        <div class="banner-imoveis-content">
+            <div class="banner-imoveis-texto">
+                <h2>Encontre o Imóvel Perfeito</h2>
+                <p>Casas, apartamentos, terrenos e muito mais. Temos opções para todos os perfis e orçamentos.</p>
+                <div class="banner-imoveis-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Imóveis Disponíveis</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Atendimento Personalizado</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24h</span>
+                        <span class="stat-label">Suporte WhatsApp</span>
+                    </div>
+                </div>
+                <a href="imoveis.html" class="btn-ver-imoveis">Ver Todos os Imóveis</a>
+            </div>
+            <div class="banner-imoveis-imagem">
+                <img src="assets/images/luana3.jpeg" alt="Luana Almeida Imóveis">
+            </div>
+        </div>
+    </section>
+
+    <div id="lista-imoveis"></div>
+
+    <footer>
+        <p>© 2025 Luana Almeida Imóveis. Apenas anúncios, sem vendas diretas.</p>
+        <p>Entre em contato: <a href="https://wa.me/5516993394135" target="_blank">WhatsApp</a></p>
+        <div class="social-media">
+            <a href="https://www.instagram.com/luana.almeida_corretora?igsh=bzQ5ZGJkajk0anJw" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank">Facebook</a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/scripts/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.banner-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 12000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+
+        // Buscar e exibir imóveis em destaque
+        async function carregarDestaques() {
+            const res = await fetch('/imoveis/destaques');
+            if (!res.ok) return;
+            const destaques = await res.json();
+            const container = document.getElementById('imoveis-destaque-lista');
+            if (!container) return;
+            if (!destaques.length) {
+                container.innerHTML = '<p style="text-align:center;color:#888;">Nenhum imóvel em destaque ainda.</p>';
+                return;
+            }
+            container.innerHTML = destaques.map(imovel => `
+                <div class="imovel">
+                    <img src="${imovel.imagem ? '/uploads/' + imovel.imagem : 'assets/images/exemplo-area-lazer.jpg'}" alt="${imovel.titulo} #${imovel.codigo || imovel.id}" width="100%" height="100%" loading="lazy">
+                    <div class="imovel-info">
+                        <h3>${imovel.titulo} ${imovel.codigo ? `#${imovel.codigo}` : ''}</h3>
+                        <a href="detalhes.html?id=${imovel.id}">Ver Detalhes</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        carregarDestaques();
+    </script>
+    <style>
+    .imoveis-lista { display: none !important; }
+    </style>
+</body>
+</html>

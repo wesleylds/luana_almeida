@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Imóvel</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .banner-carrossel {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto 16px auto;
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+            background: #fff;
+        }
+        .banner-carrossel img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            display: block;
+        }
+        .carrossel-seta {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            border: none;
+            font-size: 2.4em;
+            padding: 0 20px;
+            cursor: pointer;
+            z-index: 2;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .carrossel-seta:hover {
+            background: rgba(0,0,0,0.7);
+        }
+        .carrossel-seta.esq { left: 18px; }
+        .carrossel-seta.dir { right: 18px; }
+        .miniaturas-carrossel {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin: 12px auto 36px auto;
+            max-width: 1200px;
+        }
+        .miniaturas-carrossel img {
+            width: 110px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border 0.2s;
+        }
+        .miniaturas-carrossel img.ativa {
+            border: 2px solid #ff6b35;
+        }
+        .detalhes-bloco {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            padding: 32px 24px;
+            margin: 0 auto 32px auto;
+            max-width: 1200px;
+        }
+        .contato-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: flex-start;
+            margin-top: 32px;
+        }
+        .contato-foto {
+            flex: 1;
+            min-width: 180px;
+            max-width: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .foto-luana.vertical {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .card-contato {
+            flex: 2;
+            min-width: 260px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 24px 18px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+        }
+        .btn-whatsapp {
+            display: inline-block;
+            background: #25d366;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            margin-top: 8px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background: #1ebe5d;
+        }
+        .contato-redes {
+            margin-top: 18px;
+        }
+        .contato-redes a {
+            color: #555;
+            font-size: 1.5em;
+            margin-right: 16px;
+            transition: color 0.2s;
+        }
+        .contato-redes a:hover {
+            color: #ff6b35;
+        }
+        @media (max-width: 1200px) {
+            .banner-carrossel, .miniaturas-carrossel, .detalhes-bloco { max-width: 98vw; }
+        }
+        @media (max-width: 900px) {
+            .banner-carrossel img { height: 260px; }
+            .miniaturas-carrossel img { width: 70px; height: 50px; }
+            .contato-content { flex-direction: column; gap: 18px; }
+            .contato-foto, .card-contato { max-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .banner-carrossel img { height: 120px; }
+            .miniaturas-carrossel img { width: 38px; height: 28px; }
+            .detalhes-bloco { padding: 12px 4vw; }
+        }
+        .contato-mapa-bloco {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-top: 32px;
+        }
+        .btn-whatsapp.destaque {
+            font-size: 1.4em;
+            padding: 18px 40px;
+            border-radius: 30px;
+            background: #25d366;
+            color: #fff;
+            font-weight: bold;
+            box-shadow: 0 2px 12px rgba(37,211,102,0.10);
+            transition: background 0.2s;
+        }
+        .btn-whatsapp.destaque:hover {
+            background: #1ebe5d;
+        }
+        .mapa-bloco {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .mapa-titulo {
+            font-size: 1em;
+            color: #888;
+            margin-bottom: 6px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .mapa {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        @media (max-width: 600px) {
+            .mapa-bloco { max-width: 98vw; }
+            .btn-whatsapp.destaque { width: 100%; }
+        }
+        .cabecalho-imovel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff3ed;
+            border-radius: 14px;
+            padding: 18px 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 12px rgba(255,107,53,0.07);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .titulo-imovel-destaque {
+            font-size: 2.2em;
+            color: #ff6b35;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .codigo-imovel-destaque {
+            background: #222;
+            color: #fff;
+            border-radius: 16px;
+            padding: 4px 16px;
+            font-size: 1em;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .preco-imovel-destaque {
+            background: #ff6b35;
+            color: #fff;
+            font-size: 2em;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(255,107,53,0.10);
+            letter-spacing: 1px;
+        }
+        .caracteristicas-imovel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 32px;
+            margin: 18px 0 10px 0;
+            justify-content: flex-start;
+        }
+        .caracteristicas-imovel > div {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 1.1em;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .descricao-imovel-destaque {
+            font-size: 1.2em;
+            color: #222;
+            margin: 18px 0 10px 0;
+            text-align: left;
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        @media (max-width: 700px) {
+            .cabecalho-imovel { flex-direction: column; align-items: flex-start; }
+            .preco-imovel-destaque { width: 100%; text-align: center; }
+            .caracteristicas-imovel { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-principal">
+        <div class="header-container">
+            <div class="header-logo-nome">
+                <a href="index.html" aria-label="Página inicial">
+                    <img src="assets/images/logo.png" alt="Logo da Luana Almeida Imóveis" class="logo-img">
+                </a>
+                <a href="index.html" style="text-decoration: none;">
+                    <span class="nome-empresa">Luana Almeida Imóveis</span>
+                </a>
+            </div>
+            <div class="hamburger-menu" tabindex="0" aria-label="Abrir menu de navegação">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="imoveis.html">Imóveis</a></li>
+                    <li><a href="about.html">Sobre Nós</a></li>
+                    <li><a href="contact.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="banner-carrossel" id="banner-carrossel"></div>
+        <div class="miniaturas-carrossel" id="miniaturas-carrossel"></div>
+        <div class="detalhes-bloco">
+            <div id="descricao-imovel"></div>
+            <div class="contato-mapa-bloco">
+                <a href="https://wa.me/5516993394135?text=Olá!%20Tenho%20interesse%20em%20um%20imóvel." target="_blank" class="btn-whatsapp destaque"><i class="fab fa-whatsapp"></i> Fale pelo WhatsApp</a>
+                <div class="mapa-bloco">
+                    <div class="mapa-titulo">Localização</div>
+                    <div class="mapa" id="mapa-imovel"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 Luana Almeida Imóveis. Todos os direitos reservados.</p>
+        <p>Entre em contato: <a href="https://wa.me/5516993394135" target="_blank" rel="noopener" aria-label="WhatsApp de contato">WhatsApp</a></p>
+        <div class="social-media">
+            <a href="https://www.instagram.com/luana.almeida_corretora?igsh=bzQ5ZGJkajk0anJw" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+            <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/scripts/detalhes.js"></script>
+    <script>
+    document.getElementById('contato-form').onsubmit = function(e) {
+        e.preventDefault();
+        document.getElementById('feedback-contato').innerText = 'Mensagem enviada! Em breve entraremos em contato.';
+        this.reset();
+    };
+    </script>
+</body>
+</html> 

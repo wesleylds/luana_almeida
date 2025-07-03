@@ -1,0 +1,407 @@
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(120deg, #f6f7fb 0%, #e9ecf3 100%);
+  margin: 0;
+  min-height: 100vh;
+  color: #222;
+  transition: background 0.3s;
+}
+
+header {
+  background: linear-gradient(90deg, #1a1a1a 0%, #2c2c2c 100%);
+  color: #ff9900;
+  padding: 18px 0 10px 0;
+  text-align: center;
+  box-shadow: 0 4px 16px #0002;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+main {
+  max-width: 1200px;
+  margin: 32px auto 0 auto;
+  padding: 0 12px 32px 12px;
+}
+
+.admin-form-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #ff990022, 0 1.5px 8px #0001;
+  padding: 32px 24px 24px 24px;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.admin-form-section h2 {
+  color: #ff9900;
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* --- FORMULÁRIO DE CADASTRO DE IMÓVEIS --- */
+#imovel-form {
+  background: #fff;
+  max-width: 480px;
+  margin: 32px auto 24px auto;
+  padding: 32px 28px 24px 28px;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10), 0 1.5px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+#imovel-form label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#imovel-form input[type="text"],
+#imovel-form input[type="number"],
+#imovel-form input[type="file"],
+#imovel-form select,
+#imovel-form textarea {
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  background: #fafbfc;
+  margin-bottom: 2px;
+}
+#imovel-form input:focus,
+#imovel-form select:focus,
+#imovel-form textarea:focus {
+  border: 1.5px solid #ff9900;
+  box-shadow: 0 0 0 2px #ffe0b3;
+  background: #fffbe6;
+}
+#imovel-form textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+#imovel-form small {
+  color: #888;
+  font-size: 0.93em;
+  margin-top: -10px;
+  margin-bottom: 4px;
+}
+#imovel-form button[type="submit"] {
+  background: linear-gradient(90deg, #ff9900 60%, #ffb84d 100%);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 0;
+  font-size: 1.08rem;
+  margin-top: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255,153,0,0.08);
+  transition: background 0.2s, transform 0.15s;
+}
+#imovel-form button[type="submit"]:hover {
+  background: linear-gradient(90deg, #ffb84d 0%, #ff9900 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+#imovel-form button[type="button"] {
+  background: #eee;
+  color: #444;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1rem;
+  margin-top: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#imovel-form button[type="button"]:hover {
+  background: #ffd699;
+}
+#imovel-form input[type="file"] {
+  background: #fff;
+  border: none;
+  padding: 0;
+}
+#imovel-form .preview-img {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+#imovel-form .preview-img img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid #eee;
+}
+#mensagem-feedback {
+  animation: feedbackPop 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes feedbackPop {
+  0% { transform: scale(0.7) translateY(-30px); opacity: 0; }
+  60% { transform: scale(1.08) translateY(8px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+@media (max-width: 600px) {
+  #imovel-form {
+    max-width: 98vw;
+    padding: 18px 6vw 18px 6vw;
+    gap: 12px;
+  }
+  #imovel-form label {
+    font-size: 1rem;
+  }
+  #imovel-form button {
+    font-size: 1rem;
+    padding: 11px 0;
+  }
+}
+
+.admin-list-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #ff990022, 0 1.5px 8px #0001;
+  padding: 32px 24px 24px 24px;
+  margin-bottom: 32px;
+}
+#contador-imoveis {
+  color: #ff9900;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  animation: bounce 0.7s;
+}
+#limpar-tudo {
+  background: #dc3545;
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #dc354544;
+  transition: background 0.2s, transform 0.2s;
+}
+#limpar-tudo:hover {
+  background: #b71c1c;
+  transform: scale(1.04);
+}
+#busca-rapida {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: 1.05rem;
+  transition: border 0.2s;
+}
+#busca-rapida:focus {
+  border: 1.5px solid #ff9900;
+  outline: none;
+}
+#lista-imoveis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+}
+.card {
+  background: #f8f9fa;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px #0001;
+  padding: 22px 18px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 320px;
+  position: relative;
+  transition: box-shadow 0.3s, transform 0.3s;
+  border: 2px solid transparent;
+  animation: fade-in 0.7s;
+}
+.card:hover {
+  box-shadow: 0 8px 32px #ff990044;
+  border: 2px solid #ff9900;
+  transform: translateY(-6px) scale(1.03);
+}
+.card.editando {
+  border: 2px solid #ffc107;
+  box-shadow: 0 8px 32px #ffc10744;
+}
+.card h3 {
+  color: #ff9900;
+  font-size: 1.25rem;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+.card p {
+  margin: 0 0 6px 0;
+  color: #333;
+  font-size: 1.05rem;
+}
+.card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+.card-actions button {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px #0001;
+}
+.card-actions .btn-edit {
+  background: #ffb84d;
+  color: #fff;
+}
+.card-actions .btn-edit:hover {
+  background: #ff9900;
+  color: #fff;
+  transform: scale(1.05);
+}
+.card-actions .btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+.card-actions .btn-delete:hover {
+  background: #b71c1c;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.fade-in {
+  animation: fade-in 0.7s;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes pop {0%{transform:scale(0.7);} 60%{transform:scale(1.2);} 100%{transform:scale(1);}}
+@keyframes bounce {0%{transform:translateY(-10px);} 50%{transform:translateY(5px);} 100%{transform:translateY(0);}}
+
+body.dark {
+  background: linear-gradient(120deg, #232733 0%, #181c23 100%);
+  color: #eee;
+}
+body.dark header {
+  background: linear-gradient(90deg, #232733 0%, #181c23 100%);
+  color: #ffb84d;
+}
+body.dark .admin-form-section, body.dark .admin-list-section {
+  background: #232733;
+  box-shadow: 0 4px 24px #0004;
+}
+body.dark .card {
+  background: #181c23;
+  color: #eee;
+  box-shadow: 0 4px 18px #0004;
+}
+body.dark .card h3 {
+  color: #ffb84d;
+}
+body.dark #imovel-form input, body.dark #imovel-form select, body.dark #imovel-form textarea {
+  background: #232733;
+  color: #eee;
+  border: 1.5px solid #444;
+}
+body.dark #imovel-form input:focus, body.dark #imovel-form select:focus, body.dark #imovel-form textarea:focus {
+  border: 1.5px solid #ffb84d;
+}
+body.dark #busca-rapida {
+  background: #232733;
+  color: #eee;
+  border: 1.5px solid #444;
+}
+body.dark #busca-rapida:focus {
+  border: 1.5px solid #ffb84d;
+}
+body.dark #limpar-tudo {
+  background: #b71c1c;
+}
+body.dark #limpar-tudo:hover {
+  background: #dc3545;
+}
+body.dark .card-actions .btn-edit {
+  background: #ffb84d;
+  color: #232733;
+}
+body.dark .card-actions .btn-edit:hover {
+  background: #ff9900;
+  color: #fff;
+}
+body.dark .card-actions .btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+body.dark .card-actions .btn-delete:hover {
+  background: #b71c1c;
+  color: #fff;
+}
+
+body.dark #mensagem-feedback {
+  background: #222 !important;
+  color: #fff !important;
+}
+body.dark .card {
+  box-shadow: 0 2px 8px #0006;
+}
+body, input, select, textarea, button {
+  font-size: 1.15em;
+}
+.admin-form-section, .admin-list-section {
+  padding: 32px 0;
+}
+#imovel-form input, #imovel-form select, #imovel-form textarea {
+  font-size: 1.13em;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+#imovel-form button {
+  font-size: 1.13em;
+  padding: 12px 24px;
+  margin-top: 10px;
+}
+#lista-imoveis .card {
+  font-size: 1.12em;
+  padding: 22px 18px;
+  margin-bottom: 18px;
+}
+#busca-rapida {
+  font-size: 1.13em;
+  padding: 10px 14px;
+}
+body.dark .card,
+body.dark .card p,
+body.dark .card b,
+body.dark .card span {
+  color: #f5f5f5 !important;
+} 
