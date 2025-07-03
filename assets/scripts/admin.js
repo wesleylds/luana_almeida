@@ -1,6 +1,6 @@
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
-const API_URL = 'https://luana-almeida-site.onrender.com';
+const API_URL = 'http://localhost:8080';
 const UPLOAD = '/api/upload';
 
 const form = document.getElementById('imovel-form');
@@ -200,16 +200,22 @@ form.onsubmit = async (e) => {
         url = `${API_URL}/imoveis/${form.dataset.editando}`;
     }
     try {
-        await fetch(url, {
+        const res = await fetch(url, {
             method,
             body: formData
         });
-        mostrarFeedback(form.dataset.editando ? 'Imóvel atualizado com sucesso!' : 'Imóvel cadastrado com sucesso!');
+        const data = await res.json();
+        if (!res.ok) {
+            // Exibe a mensagem de erro retornada pelo backend
+            mostrarFeedback(data.error || 'Erro ao salvar imóvel', '#dc3545');
+            return;
+        }
+        mostrarFeedback('Imóvel salvo com sucesso!');
         animarConfirmacao('✅');
         limparForm();
         await carregarImoveis();
     } catch (err) {
-        mostrarFeedback('Erro ao salvar imóvel!', '#dc3545');
+        mostrarFeedback('Erro ao salvar imóvel: ' + err.message, '#dc3545');
     }
 };
 
