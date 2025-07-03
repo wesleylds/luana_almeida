@@ -291,9 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = document.createElement('div');
           card.className = 'imovel';
           card.innerHTML = `
-            <a href="detalhes.html?id=${imovel.id}"><img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}"></a>
+            <a href="detalhes.html?id=${imovel.id}"><img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img"></a>
             <a href="detalhes.html?id=${imovel.id}" style="text-decoration:none;"><h3 class="titulo-imovel">${imovel.titulo}<br><span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span></h3></a>
             <div class="imovel-info">
+                <p class="descricao">${imovel.descricao ?? ''}</p>
                 <ul class="detalhes-lista">
                     <li><span class="icon"><i class="fas fa-home"></i></span> <strong>Tipo:</strong> ${imovel.tipo ?? '-'}</li>
                     <li><span class="icon"><i class="fas fa-bed"></i></span> <strong>Quartos:</strong> ${imovel.quartos ?? '-'}</li>
@@ -301,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><span class="icon"><i class="fas fa-ruler-combined"></i></span> <strong>Área:</strong> ${imovel.area ?? '-'} m²</li>
                     <li><span class="icon"><i class="fas fa-bath"></i></span> <strong>Banheiros:</strong> ${imovel.banheiros ?? '-'}</li>
                     <li><span class="icon"><i class="fas fa-map-marker-alt"></i></span> <strong>Localização:</strong> ${imovel.localizacao ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-dollar-sign"></i></span> <strong>Preço:</strong> R$ ${imovel.preco ?? '-'}</li>
+                    <li><span class="icon"><i class="fas fa-dollar-sign"></i></span> <strong>Preço:</strong> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</li>
                 </ul>
             </div>
             <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
