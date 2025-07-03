@@ -277,7 +277,7 @@ $(document).ready(function(){
     carregarImoveis();
 });
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://luana-almeida-site.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Renderização dinâmica para imoveis.html
