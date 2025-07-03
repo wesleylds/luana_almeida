@@ -155,7 +155,13 @@ form.onsubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-
+    // Adicionar imagens
+    const imagensInput = document.getElementById('fotos-imovel');
+    if (imagensInput && imagensInput.files.length > 0) {
+        for (let i = 0; i < imagensInput.files.length; i++) {
+            formData.append('imagens', imagensInput.files[i]);
+        }
+    }
     // Validação dos campos obrigatórios
     const camposObrigatorios = [
         'titulo', 'descricao', 'preco', 'quartos', 'salas', 'area', 'localizacao', 'tipo', 'banheiros'
@@ -187,64 +193,57 @@ form.onsubmit = async (e) => {
         form.banheiros.focus();
         return;
     }
-
     let method = 'POST';
     let url = `${API_URL}/imoveis`;
     if (form.dataset.editando) {
         method = 'PUT';
         url = `${API_URL}/imoveis/${form.dataset.editando}`;
     }
-
-    await fetch(url, {
-        method,
-        body: formData
-    });
-
-    form.reset();
-    form.removeAttribute('data-editando');
-    document.getElementById('fotos-imovel').value = '';
-    previewFachada.innerHTML = '';
-    previewCarrossel.innerHTML = '';
-    carregarImoveis();
+    try {
+        await fetch(url, {
+            method,
+            body: formData
+        });
+        mostrarFeedback(form.dataset.editando ? 'Imóvel atualizado com sucesso!' : 'Imóvel cadastrado com sucesso!');
+        animarConfirmacao('✅');
+        limparForm();
+        await carregarImoveis();
+    } catch (err) {
+        mostrarFeedback('Erro ao salvar imóvel!', '#dc3545');
+    }
 };
 
 function editarImovel(imovel) {
-    const form = document.getElementById('imovel-form');
+    document.getElementById('imovel-id').value = imovel.id;
+    form.dataset.editando = imovel.id;
     form.titulo.value = imovel.titulo;
-    form.descricao.value = imovel.descricao;
+    form.tipo.value = imovel.tipo;
     form.preco.value = imovel.preco;
     form.quartos.value = imovel.quartos;
     form.salas.value = imovel.salas;
+    form.banheiros.value = imovel.banheiros;
     form.area.value = imovel.area;
     form.localizacao.value = imovel.localizacao;
-    editandoId = imovel.id;
+    form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
-    mostrarFeedback('✏️ Editando imóvel...', '#ffc107');
-    carregarImoveis();
+    previewFachada.innerHTML = imovel.imagem ? `<img src="${API_URL}/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    previewCarrossel.innerHTML = '';
 }
 
 cancelarBtn.onclick = () => {
     limparForm();
-    mostrarFeedback('✏️ Edição cancelada.', '#6c757d');
-    carregarImoveis();
 };
 
-function deletarImovel(id, card) {
-    if (confirm('Tem certeza que deseja deletar este imóvel?')) {
-        fetch(`${API_URL}/imoveis/${id}`, { method: 'DELETE' })
-            .then(() => {
-                if (card) {
-                    card.classList.add('fade-out');
-                    setTimeout(() => {
-                        carregarImoveis();
-                    }, 400);
-                } else {
-                    carregarImoveis();
-                }
-                limparForm();
-                mostrarFeedback('🗑️ Imóvel deletado!', '#dc3545');
-                animarConfirmacao('🗑️');
-            });
+async function deletarImovel(id, card) {
+    if (!confirm('Tem certeza que deseja excluir este imóvel?')) return;
+    try {
+        await fetch(`${API_URL}/imoveis/${id}`, { method: 'DELETE' });
+        mostrarFeedback('Imóvel excluído com sucesso!');
+        animarConfirmacao('🗑️');
+        if (card && card.parentNode) card.parentNode.removeChild(card);
+        await carregarImoveis();
+    } catch (err) {
+        mostrarFeedback('Erro ao excluir imóvel!', '#dc3545');
     }
 }
 
@@ -338,25 +337,21 @@ form.addEventListener('submit', function(e) {
 });
 
 // Limpar tudo
-limparTudoBtn.onclick = () => {
-    if (confirm('Tem certeza que deseja remover TODOS os imóveis?')) {
-        fetch(`${API_URL}/imoveis`)
-            .then(res => res.json())
-            .then(imoveis => {
-                Promise.all(imoveis.map(imovel => fetch(`${API_URL}/imoveis/${imovel.id}`, { method: 'DELETE' })))
-                    .then(() => {
-                        carregarImoveis();
-                        limparForm();
-                        mostrarFeedback('🧹 Todos os imóveis foram removidos!', '#dc3545');
-                        animarConfirmacao('🧹');
-                    });
-            });
+limparTudoBtn.onclick = async () => {
+    if (!confirm('Tem certeza que deseja excluir TODOS os imóveis?')) return;
+    const res = await fetch(`${API_URL}/imoveis`);
+    const imoveis = await res.json();
+    for (const imovel of imoveis) {
+        await fetch(`${API_URL}/imoveis/${imovel.id}`, { method: 'DELETE' });
     }
+    mostrarFeedback('Todos os imóveis foram excluídos!');
+    animarConfirmacao('🧹');
+    await carregarImoveis();
 };
 
 // Busca rápida
-buscaRapida.oninput = (e) => {
-    filtroBusca = e.target.value;
+buscaRapida.oninput = function() {
+    filtroBusca = this.value;
     carregarImoveis();
 };
 
