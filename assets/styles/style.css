@@ -399,16 +399,10 @@ button:hover {
 
 .imoveis-lista {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 32px;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    background: transparent !important;
-    justify-content: stretch;
-    justify-items: stretch;
-    padding: 0 24px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px 24px;
+    padding: 24px 0;
+    justify-items: center;
 }
 
 .imoveis-lista.novos,
