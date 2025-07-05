@@ -13,7 +13,7 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
     let idxAtual = 0;
 
     // Montar HTML das imagens para o Slick
-    banner.innerHTML = `<div class="carrossel-imagens">${todasImagens.map((img, idx) => `<img src='https://luana-almeida.onrender.com/uploads/${img}' class='img-carrossel' style='max-width:100%;border-radius:8px;cursor:pointer;' data-idx='${idx}'>`).join('')}</div>`;
+    banner.innerHTML = `<div class="carrossel-imagens">${todasImagens.map((img, idx) => `<img src='${img}' class='img-carrossel' style='max-width:100%;border-radius:8px;cursor:pointer;' data-idx='${idx}'>`).join('')}</div>`;
 
     // Inicializar Slick Carousel igual ao index
     $(function() {
@@ -38,7 +38,7 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
 
     // Miniaturas premium
     thumbs.innerHTML = todasImagens.map((img, i) =>
-        `<img src="https://luana-almeida.onrender.com/uploads/${img}" class="${i === idxAtual ? 'ativa' : ''}" data-idx="${i}" alt="Miniatura" style="width:70px;height:70px;object-fit:cover;border-radius:8px;margin:0 4px;cursor:pointer;">`
+        `<img src="${img}" class="${i === idxAtual ? 'ativa' : ''}" data-idx="${i}" alt="Miniatura" style="width:70px;height:70px;object-fit:cover;border-radius:8px;margin:0 4px;cursor:pointer;">`
     ).join('');
     thumbs.querySelectorAll('img').forEach(img => {
         img.onclick = () => {
@@ -77,11 +77,11 @@ function abrirModalFullscreenPremium(imagens, startIdx) {
     <span id='close-modal-premium' style='position:fixed;top:24px;right:40px;font-size:2.5em;color:#fff;cursor:pointer;font-weight:bold;z-index:10000;'>&times;</span>
     <div style='flex:1;display:flex;align-items:center;justify-content:center;width:100vw;'>
       <button id='modal-prev-img-premium' style='background:none;border:none;color:#fff;font-size:3em;cursor:pointer;position:absolute;left:32px;top:50%;transform:translateY(-50%);z-index:10001;'>&#10094;</button>
-      <img src='https://luana-almeida.onrender.com/uploads/${imagens[idx]}' id='modal-img-premium' style='max-width:80vw;max-height:80vh;display:block;margin:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.25);transition:opacity 0.4s;'>
+      <img src='${imagens[idx]}' id='modal-img-premium' style='max-width:80vw;max-height:80vh;display:block;margin:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.25);transition:opacity 0.4s;'>
       <button id='modal-next-img-premium' style='background:none;border:none;color:#fff;font-size:3em;cursor:pointer;position:absolute;right:32px;top:50%;transform:translateY(-50%);z-index:10001;'>&#10095;</button>
     </div>
     <div id='modal-thumbs-premium' style='display:flex;justify-content:center;gap:10px;margin:18px 0 0 0;'>
-      ${imagens.map((img, i) => `<img src='https://luana-almeida.onrender.com/uploads/${img}' data-idx='${i}' class='modal-thumb-premium${i===idx?' ativa':''}' style='width:70px;height:70px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.10);opacity:${i===idx?1:0.7};border:2px solid ${i===idx?'#ff9900':'transparent'};cursor:pointer;transition:border 0.3s,opacity 0.3s;'>`).join('')}
+      ${imagens.map((img, i) => `<img src='${img}' data-idx='${i}' class='modal-thumb-premium${i===idx?' ativa':''}' style='width:70px;height:70px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.10);opacity:${i===idx?1:0.7};border:2px solid ${i===idx?'#ff9900':'transparent'};cursor:pointer;transition:border 0.3s,opacity 0.3s;'>`).join('')}
     </div>
   `;
   document.body.appendChild(modal);
@@ -109,7 +109,7 @@ function atualizarModalPremium(modal, imagens, idx) {
   const img = modal.querySelector('#modal-img-premium');
   img.style.opacity = 0;
   setTimeout(() => {
-    img.src = `https://luana-almeida.onrender.com/uploads/${imagens[idx]}`;
+    img.src = `${imagens[idx]}`;
     img.style.opacity = 1;
     // Atualizar miniaturas
     modal.querySelectorAll('.modal-thumb-premium').forEach((thumb, i) => {

@@ -100,7 +100,7 @@ function criarCard(imovel) {
     if (editandoId === imovel.id) card.classList.add('editando');
     card.innerHTML = `
         <div style="text-align:center;">
-            ${(imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${API_URL}/uploads/${imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">` : '<div style="color:#aaa;font-size:12px;">Sem imagem</div>'}
+            ${(imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">` : '<div style="color:#aaa;font-size:12px;">Sem imagem</div>'}
         </div>
         <h3>🏠 ${imovel.titulo}</h3>
         <p>${imovel.descricao}</p>
@@ -266,7 +266,7 @@ function editarImovel(imovel) {
     form.localizacao.value = imovel.localizacao;
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
-    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${API_URL}/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
     previewCarrossel.innerHTML = '';
 }
 

@@ -35,7 +35,7 @@ async function carregarImoveisPublico() {
       return `
       <div class="imovel-card">
         <div class="imovel-card-imgbox">
-          <img src="https://luana-almeida.onrender.com/uploads/${imovel.imagem}" alt="${imovel.titulo}" data-id="${imovel.id}" class="imovel-img-click" onerror="this.src='assets/images/exemplo-sala-estar.jpg'">
+          <img src="${imovel.imagem}" alt="${imovel.titulo}" data-id="${imovel.id}" class="imovel-img-click" onerror="this.src='assets/images/exemplo-sala-estar.jpg'">
           <div class="imovel-card-overlay">
             <div class="imovel-card-preco">R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</div>
             <div class="imovel-card-local"><i class="fa-solid fa-map-marker-alt"></i> ${imovel.localizacao || '-'}</div>
