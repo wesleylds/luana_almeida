@@ -22,8 +22,24 @@ initDB();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// CORS liberado
-app.use(cors());
+// CORS liberado para domínio do site publicado e localhost
+const allowedOrigins = [
+  'https://luana-almeida-site.onrender.com',
+  'http://localhost:5500',
+  'http://127.0.0.1:5500'
+];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // Permite requests sem origin (ex: mobile, curl)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'A política de CORS bloqueou o acesso da origem: ' + origin;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Upload de imagens
 const uploadFolder = path.join(__dirname, 'uploads');
