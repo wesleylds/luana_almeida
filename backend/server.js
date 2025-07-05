@@ -10,6 +10,8 @@ const { JSONFile } = require('lowdb/node');
 const dbFile = path.join(__dirname, 'db.json');
 const adapter = new JSONFile(dbFile);
 const db = new Low(adapter, { imoveis: [] });
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 async function initDB() {
   await db.read();
@@ -47,9 +49,20 @@ app.use((req, res, next) => {
 // Upload de imagens
 const uploadFolder = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadFolder)) fs.mkdirSync(uploadFolder);
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadFolder),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+
+cloudinary.config({
+  cloud_name: 'dx3ydqsd3',
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'imoveis',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+    transformation: [{ width: 1200, height: 800, crop: 'limit' }]
+  }
 });
 const upload = multer({ storage });
 
@@ -118,11 +131,11 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   let areaConstruidaProcessado = parseOrNull(area_construida);
   let banheirosProcessado = parseOrNull(banheiros);
 
-  if (!req.files || req.files.length === 0 || !req.files[0].filename) {
+  if (!req.files || req.files.length === 0 || !req.files[0].path) {
     return res.status(400).json({ error: 'Imagem principal obrigatória não enviada!' });
   }
-  let imagem = req.files[0].filename;
-  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.filename) : [];
+  let imagem = req.files[0].path;
+  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
   
   // Verifica duplicidade de código
   const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1', [codigoFinal]);
@@ -160,8 +173,8 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
     precoProcessado = parseFloat(precoLimpo);
     if (isNaN(precoProcessado)) return res.status(400).json({ error: 'Preço inválido' });
   }
-  let imagem = req.files && req.files[0] ? req.files[0].filename : null;
-  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.filename) : [];
+  let imagem = req.files && req.files[0] ? req.files[0].path : null;
+  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
   
   const sql = `UPDATE imoveis SET titulo = ?, descricao = ?, preco = ?, imagem = COALESCE(?, imagem), carrossel = COALESCE(?, carrossel), quartos = ?, salas = ?, area_total = ?, area_construida = ?, localizacao = ?, tipo = ?, banheiros = ?, codigo = ? WHERE id = ?`;
   
