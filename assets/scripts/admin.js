@@ -1,6 +1,6 @@
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://luana-almeida.onrender.com';
 const UPLOAD = '/api/upload';
 
 const form = document.getElementById('imovel-form');
