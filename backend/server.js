@@ -77,6 +77,14 @@ app.get('/imoveis/:id', async (req, res) => {
   const imovel = result.rows[0];
   imovel.visitas = (imovel.visitas || 0) + 1;
   await pool.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
+  // Conversão do carrossel para array
+  if (imovel.carrossel && typeof imovel.carrossel === 'string') {
+    try {
+      imovel.carrossel = JSON.parse(imovel.carrossel);
+    } catch (e) {
+      imovel.carrossel = [];
+    }
+  }
   res.json(imovel);
 });
 
