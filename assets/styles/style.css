@@ -2341,3 +2341,203 @@ footer .social-media a:hover {
   opacity: 1;
   box-shadow: 0 4px 16px rgba(255,153,0,0.15);
 }
+
+.img-carrossel {
+  cursor: pointer !important;
+}
+
+/* Banner do carrossel de detalhes menor */
+.banner-carrossel, #banner-carrossel {
+  max-width: 700px;
+  margin: 0 auto;
+  max-height: 340px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.carrossel-imagens img {
+  max-height: 340px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Setas do Slick Carousel iguais ao Swiper do index */
+.slick-arrow {
+  background: none !important;
+  border: none !important;
+  color: #ff9900 !important;
+  font-size: 2.3em !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0.85;
+  transition: color 0.2s, opacity 0.2s;
+  padding: 0 8px;
+}
+.slick-arrow:hover {
+  color: #ff6b35 !important;
+  opacity: 1;
+  background: none !important;
+}
+.slick-prev {
+  left: 8px !important;
+}
+.slick-next {
+  right: 8px !important;
+}
+.slick-disabled {
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
+
+/* Remove o texto padrão das setas do Slick */
+.slick-prev:before, .slick-next:before {
+  content: '' !important;
+}
+
+/* Ícone Font Awesome nas setas do Slick, azul premium e traço fino */
+.slick-prev::after, .slick-next::after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 300;
+  font-size: 1.7em;
+  color: #2563eb;
+  display: block;
+  line-height: 1;
+}
+.slick-prev::after {
+  content: '\f053';
+}
+.slick-next::after {
+  content: '\f054';
+}
+.slick-arrow {
+  background: none !important;
+  border: none !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0.85;
+  transition: color 0.2s, opacity 0.2s;
+  padding: 0 8px;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slick-arrow:hover {
+  color: #1d4ed8 !important;
+  opacity: 1;
+  background: none !important;
+}
+.slick-prev { left: 8px !important; }
+.slick-next { right: 8px !important; }
+.slick-disabled { opacity: 0.3 !important; pointer-events: none; }
+
+/* Remove completamente as setas do Slick Carousel na página de detalhes */
+.slick-arrow, .slick-prev, .slick-next {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 42px !important;
+  height: 42px !important;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+  border: none;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  margin: 0;
+}
+.slick-prev { left: 8px !important; }
+.slick-next { right: 8px !important; }
+.slick-prev, .slick-next {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+.slick-prev:before, .slick-next:before {
+  content: '' !important;
+}
+.slick-prev::after, .slick-next::after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 2.1em !important;
+  color: #2563eb !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px #0002;
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid #f3f3f3;
+  opacity: 0.92;
+  transition: box-shadow 0.18s, opacity 0.18s, background 0.18s;
+  content: '';
+}
+.slick-prev::after, .slick-next::after {
+  content: '';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px #0002;
+  border: 1.5px solid #e3eaf5;
+  opacity: 0.92;
+  transition: box-shadow 0.18s, opacity 0.18s, background 0.18s;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px 28px;
+}
+.slick-prev::after {
+  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="18 6 10 14 18 22" stroke="%2325a8e0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+.slick-next::after {
+  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10 6 18 14 10 22" stroke="%2325a8e0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+.slick-arrow:hover::after, .slick-prev:hover::after, .slick-next:hover::after {
+  box-shadow: 0 4px 20px #3b7ddd33;
+  opacity: 1;
+  background: #e9ecf3 !important;
+}
+
+.slick-arrow {
+  background: none !important;
+  border: none !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0.85;
+  transition: color 0.2s, opacity 0.2s;
+  padding: 0 8px;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  align-items: center;
+  justify-content: center;
+}
+.slick-arrow:hover {
+  color: #1d4ed8 !important;
+  opacity: 1;
+  background: none !important;
+}
+.slick-prev { left: 8px !important; }
+.slick-next { right: 8px !important; }
+.slick-disabled { opacity: 0.3 !important; pointer-events: none; }
