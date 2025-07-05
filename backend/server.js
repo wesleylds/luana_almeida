@@ -104,12 +104,19 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   // Garantir que codigo seja string
   let codigoFinal = Array.isArray(codigo) ? codigo[0] : codigo;
 
-  let precoProcessado = null;
-  if (preco) {
-    let precoLimpo = preco.toString().trim().replace(/\./g, '').replace(',', '.');
-    precoProcessado = parseFloat(precoLimpo);
-    if (isNaN(precoProcessado)) return res.status(400).json({ error: 'Preço inválido' });
+  // Conversão segura dos campos numéricos
+  function parseOrNull(val) {
+    if (val === undefined || val === null || val === '') return null;
+    const n = Number(val.toString().replace(/\./g, '').replace(',', '.'));
+    return isNaN(n) ? null : n;
   }
+
+  let precoProcessado = parseOrNull(preco);
+  let quartosProcessado = parseOrNull(quartos);
+  let salasProcessado = parseOrNull(salas);
+  let areaTotalProcessado = parseOrNull(area_total);
+  let areaConstruidaProcessado = parseOrNull(area_construida);
+  let banheirosProcessado = parseOrNull(banheiros);
 
   if (!req.files || req.files.length === 0 || !req.files[0].filename) {
     return res.status(400).json({ error: 'Imagem principal obrigatória não enviada!' });
@@ -131,18 +138,17 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
       precoProcessado,
       imagem,
       JSON.stringify(carrossel),
-      quartos ? parseInt(quartos) : null,
-      salas ? parseInt(salas) : null,
-      area_total ? parseFloat(area_total.toString()) : null,
-      area_construida ? parseFloat(area_construida.toString()) : null,
+      quartosProcessado,
+      salasProcessado,
+      areaTotalProcessado,
+      areaConstruidaProcessado,
       localizacao,
       tipo,
-      banheiros ? parseInt(banheiros) : null,
+      banheirosProcessado,
       codigoFinal
     ]
   );
   res.status(201).json(insert.rows[0]);
-
 });
 
 // Editar imóvel
