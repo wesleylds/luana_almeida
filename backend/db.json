@@ -15,7 +15,7 @@
       "tipo": "Casa",
       "banheiros": 2,
       "codigo": "IMV1751679424727",
-      "visitas": 1
+      "visitas": 3
     },
     {
       "id": 2,
@@ -35,7 +35,7 @@
       "tipo": "Apartamento",
       "banheiros": 2,
       "codigo": "IMV1751679845076",
-      "visitas": 1
+      "visitas": 11
     },
     {
       "id": 3,
@@ -55,7 +55,165 @@
       "tipo": "Casa",
       "banheiros": 2,
       "codigo": "IMV1751680184616",
+      "visitas": 6
+    },
+    {
+      "id": 4,
+      "titulo": "casa",
+      "descricao": "csa grande completa ",
+      "preco": 250000,
+      "imagem": "1751680468274-casa_001.jpg",
+      "carrossel": [
+        "1751680468274-casa_003 - Copia.jpg",
+        "1751680468274-casa_003.jpg",
+        "1751680468275-casa_004 - Copia.jpg",
+        "1751680468279-casa_004.jpg",
+        "1751680468283-casa_005.webp",
+        "1751680468284-ft.jpg",
+        "1751680468284-praia_002.jpg"
+      ],
+      "quartos": 4,
+      "salas": 2,
+      "area_total": 250,
+      "area_construida": 150,
+      "localizacao": "jose carlos braguin 110",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751680468266",
+      "visitas": 9
+    },
+    {
+      "id": 5,
+      "titulo": "casa",
+      "descricao": "2",
+      "preco": 2222.22,
+      "imagem": "1751682081002-casa_004 - Copia.jpg",
+      "carrossel": [
+        "1751682081006-casa_004.jpg",
+        "1751682081010-casa_005.webp",
+        "1751682081010-ft.jpg",
+        "1751682081011-praia_002.jpg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 2,
+      "localizacao": "2",
+      "tipo": "Apartamento",
+      "banheiros": 2,
+      "codigo": "IMV1751682080993",
+      "visitas": 6
+    },
+    {
+      "id": 6,
+      "titulo": "csaaa",
+      "descricao": "dsds",
+      "preco": 260000,
+      "imagem": "1751683872163-casa_003 - Copia.jpg",
+      "carrossel": [
+        "1751683872163-casa_003.jpg",
+        "1751683872163-casa_005.webp",
+        "1751683872164-ft.jpg"
+      ],
+      "quartos": 1,
+      "salas": 1,
+      "area_total": 232,
+      "area_construida": 222,
+      "localizacao": "ribeirao",
+      "tipo": "Casa",
+      "banheiros": 1,
+      "codigo": "IMV1751683872154",
+      "visitas": 17
+    },
+    {
+      "id": 7,
+      "titulo": "csaa",
+      "descricao": "11",
+      "preco": 1111111.11,
+      "imagem": "1751686754461-casa_004 - Copia.jpg",
+      "carrossel": [
+        "1751686754465-casa_004.jpg",
+        "1751686754468-casa_005.webp",
+        "1751686754468-ft.jpg"
+      ],
+      "quartos": 1,
+      "salas": 1,
+      "area_total": 1111,
+      "area_construida": 1111,
+      "localizacao": "111",
+      "tipo": "Casa",
+      "banheiros": 1,
+      "codigo": "IMV1751686754457",
       "visitas": 1
+    },
+    {
+      "id": 8,
+      "titulo": "wwwwww",
+      "descricao": "2",
+      "preco": 222.22,
+      "imagem": "1751689196989-casa_003 - Copia.jpg",
+      "carrossel": [
+        "1751689196989-casa_003.jpg",
+        "1751689196989-casa_005.webp",
+        "1751689196990-ft.jpg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 2,
+      "localizacao": "2",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751689196981",
+      "visitas": 2
+    },
+    {
+      "id": 9,
+      "titulo": "casa",
+      "descricao": "2",
+      "preco": 2222222.22,
+      "imagem": "1751689378924-casa_004 - Copia.jpg",
+      "carrossel": [
+        "1751689378928-casa_004.jpg",
+        "1751689378932-casa_005.webp",
+        "1751689378932-ft.jpg",
+        "1751689378932-praia_002.jpg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 222,
+      "localizacao": "2",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751689378913",
+      "visitas": 1
+    },
+    {
+      "id": 10,
+      "titulo": "csa",
+      "descricao": "dss2222",
+      "preco": 2222222,
+      "imagem": "1751689734032-apart_010.jfif",
+      "carrossel": [
+        "1751689734032-casa_001.jpg",
+        "1751689734032-casa_003 - Copia.jpg",
+        "1751689734032-casa_003.jpg",
+        "1751689734033-casa_004 - Copia.jpg",
+        "1751689734038-casa_004.jpg",
+        "1751689734041-casa_005.webp",
+        "1751689734041-ft.jpg",
+        "1751689734042-praia_002.jpg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 2,
+      "localizacao": "3",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751689523420",
+      "visitas": 2
     }
   ]
 }

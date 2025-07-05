@@ -1,21 +1,127 @@
 body {
-  font-family: 'Poppins', Arial, sans-serif;
-  background: linear-gradient(120deg, #f6f7fb 0%, #e9ecf3 100%);
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  background: linear-gradient(120deg, #f7f7fa 0%, #f1f1f7 100%);
   margin: 0;
   min-height: 100vh;
-  color: #222;
-  transition: background 0.3s;
+  color: #232323;
+  transition: background 0.3s, color 0.3s;
+}
+body:not(.dark) header {
+  background: linear-gradient(90deg, #fffbe6 0%, #ffe7b3 100%);
+  color: #ff9900;
+  border-bottom: 3px solid #ffb300;
+}
+body:not(.dark) main {
+  background: none;
+}
+body:not(.dark) .admin-form-section,
+body:not(.dark) .admin-list-section {
+  background: #fff;
+  color: #232323;
+  box-shadow: 0 8px 40px #ffb30022, 0 2px 10px #0001;
+}
+body:not(.dark) #imovel-form {
+  background: #fff;
+  color: #232323;
+  box-shadow: 0 4px 24px #ffb30011, 0 2px 8px #0001;
+}
+body:not(.dark) #imovel-form input,
+body:not(.dark) #imovel-form select,
+body:not(.dark) #imovel-form textarea {
+  background: #f7f7fa;
+  color: #232323;
+  border: 2.5px solid #ffe7b3;
+}
+body:not(.dark) #imovel-form input:focus,
+body:not(.dark) #imovel-form select:focus,
+body:not(.dark) #imovel-form textarea:focus {
+  border-color: #ffb300;
+  background: #fffbe6;
+  color: #232323;
+}
+body:not(.dark) .card,
+body:not(.dark) .card-imovel {
+  background: #fffbe6;
+  color: #232323;
+  border-color: #ffe7b3;
+  box-shadow: 0 8px 40px #ffb30022, 0 2px 10px #0001;
+}
+body:not(.dark) .card h3,
+body:not(.dark) .card-imovel h3 {
+  color: #ffb300;
+}
+body:not(.dark) .card .btn-edit,
+body:not(.dark) .card .btn-delete,
+body:not(.dark) .card-imovel .imovel-acoes button {
+  background: linear-gradient(90deg, #ffedb3 0%, #ffb300 100%);
+  color: #232323;
+  border: 1.5px solid #ffb300;
+}
+body:not(.dark) .card .btn-edit:hover,
+body:not(.dark) .card .btn-delete:hover,
+body:not(.dark) .card-imovel .imovel-acoes button:hover {
+  background: linear-gradient(90deg, #ffb300 0%, #ffedb3 100%);
+  color: #fff;
+}
+body:not(.dark) #limpar-tudo {
+  background: linear-gradient(90deg, #ffb300 0%, #ff6b35 100%);
+  color: #fff;
+  border: none;
+}
+body:not(.dark) #limpar-tudo:hover {
+  background: linear-gradient(90deg, #ff6b35 0%, #ffb300 100%);
+  color: #fff;
+}
+body:not(.dark) #toggle-dark {
+  color: #ff9900;
+}
+body:not(.dark) #btn-logout {
+  background: #ffb300;
+  color: #fff;
+  border: none;
+}
+
+.obrigatorio {
+  color: #ffb300;
+  font-weight: 700;
 }
 
 header {
-  background: linear-gradient(90deg, #1a1a1a 0%, #2c2c2c 100%);
-  color: #ff9900;
-  padding: 18px 0 10px 0;
+  background: linear-gradient(90deg, #181818 0%, #262626 100%);
+  color: #ffb300;
+  padding: 20px 0 16px 0;
   text-align: center;
-  box-shadow: 0 4px 16px #0002;
+  box-shadow: 0 6px 24px #ffb30022, 0 2px 8px #0005;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
+  border-bottom: 3px solid #ffb300;
+  letter-spacing: 1.2px;
+}
+header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #ffb300;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#toggle-dark {
+  margin-left: 18px;
+  font-size: 1.6em;
+  background: none;
+  border: none;
+  color: #ffb300;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+#toggle-dark:hover {
+  color: #fff;
+  transform: scale(1.15) rotate(-8deg);
 }
 
 header h1 {
@@ -36,372 +142,357 @@ main {
 }
 
 .admin-form-section {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px #ff990022, 0 1.5px 8px #0001;
-  padding: 32px 24px 24px 24px;
-  margin-bottom: 32px;
-  max-width: 600px;
+  background: #232323;
+  border-radius: 22px;
+  box-shadow: 0 8px 40px #ffb30033, 0 2px 10px #0008;
+  padding: 38px 28px 28px 28px;
+  margin-bottom: 38px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  animation: fadeIn 0.8s;
 }
 
 .admin-form-section h2 {
-  color: #ff9900;
-  font-size: 1.4rem;
-  margin-bottom: 18px;
+  color: #ffb300;
+  font-size: 1.6rem;
+  margin-bottom: 23px;
   text-align: center;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-/* --- FORMULÁRIO DE CADASTRO DE IMÓVEIS --- */
 #imovel-form {
-  background: #fff;
+  background: #232323;
   max-width: 480px;
   margin: 32px auto 24px auto;
-  padding: 32px 28px 24px 28px;
   border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.10), 0 1.5px 6px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 4px 24px #ffb30022, 0 2px 8px #0009;
+  padding: 28px 20px 20px 20px;
+  transition: box-shadow 0.3s;
   gap: 18px;
   position: relative;
+  font-size: 1.08em;
 }
+
 #imovel-form label {
-  font-weight: 600;
-  color: #444;
+  font-weight: 700;
+  color: #ffb300;
   margin-bottom: 4px;
   font-size: 1.08rem;
   letter-spacing: 0.01em;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
+
 #imovel-form input[type="text"],
 #imovel-form input[type="number"],
 #imovel-form input[type="file"],
 #imovel-form select,
 #imovel-form textarea {
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 1rem;
+  border: 2.5px solid #444;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 1em;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  background: #fafbfc;
-  margin-bottom: 2px;
+  background: #181818;
+  color: #f2f2f2;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 12px #0005;
 }
+
 #imovel-form input:focus,
 #imovel-form select:focus,
 #imovel-form textarea:focus {
-  border: 1.5px solid #ff9900;
-  box-shadow: 0 0 0 2px #ffe0b3;
-  background: #fffbe6;
+  border: 2.5px solid #ffb300;
+  box-shadow: 0 0 0 2px #ffb30066, 0 4px 18px #ffb30022;
+  background: #232323;
+  color: #fff;
 }
+
 #imovel-form textarea {
   min-height: 70px;
   resize: vertical;
 }
-#imovel-form small {
-  color: #888;
-  font-size: 0.93em;
-  margin-top: -10px;
-  margin-bottom: 4px;
-}
+
 #imovel-form button[type="submit"] {
-  background: linear-gradient(90deg, #ff9900 60%, #ffb84d 100%);
+  background: linear-gradient(90deg, #ffb300 0%, #ff6b35 100%);
   color: #fff;
-  font-weight: bold;
   border: none;
-  border-radius: 8px;
-  padding: 13px 0;
-  font-size: 1.08rem;
+  padding: 14px 0;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 1.17em;
+  font-weight: 800;
   margin-top: 10px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255,153,0,0.08);
-  transition: background 0.2s, transform 0.15s;
-}
-#imovel-form button[type="submit"]:hover {
-  background: linear-gradient(90deg, #ffb84d 0%, #ff9900 100%);
-  transform: translateY(-2px) scale(1.03);
-}
-#imovel-form button[type="button"] {
-  background: #eee;
-  color: #444;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 0;
-  font-size: 1rem;
-  margin-top: 0;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#imovel-form button[type="button"]:hover {
-  background: #ffd699;
-}
-#imovel-form input[type="file"] {
-  background: #fff;
-  border: none;
-  padding: 0;
-}
-#imovel-form .preview-img {
+  transition: background 0.22s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 4px 18px #ffb30044, 0 2px 8px #0002;
+  letter-spacing: 0.5px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
-  margin-bottom: 8px;
 }
-#imovel-form .preview-img img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1.5px solid #eee;
+
+#imovel-form button[type="submit"]:hover {
+  background: linear-gradient(90deg, #ff6b35 0%, #ffb300 100%);
+  box-shadow: 0 8px 32px #ffb30066;
+  transform: translateY(-3px) scale(1.07);
 }
-#mensagem-feedback {
-  animation: feedbackPop 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+
+#imovel-form button[type="button"] {
+  background: #222;
+  color: #ffb300;
+  border: none;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: 700;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px #0003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
-@keyframes feedbackPop {
-  0% { transform: scale(0.7) translateY(-30px); opacity: 0; }
-  60% { transform: scale(1.08) translateY(8px); opacity: 1; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-@media (max-width: 600px) {
-  #imovel-form {
-    max-width: 98vw;
-    padding: 18px 6vw 18px 6vw;
-    gap: 12px;
-  }
-  #imovel-form label {
-    font-size: 1rem;
-  }
-  #imovel-form button {
-    font-size: 1rem;
-    padding: 11px 0;
-  }
+
+#imovel-form button[type="button"]:hover {
+  background: #ffb300;
+  color: #232323;
 }
 
 .admin-list-section {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px #ff990022, 0 1.5px 8px #0001;
-  padding: 32px 24px 24px 24px;
-  margin-bottom: 32px;
+  background: #232323;
+  border-radius: 22px;
+  box-shadow: 0 8px 40px #ffb30033, 0 2px 10px #0008;
+  padding: 38px 28px 28px 28px;
+  margin-bottom: 38px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.8s;
 }
+
 #contador-imoveis {
-  color: #ff9900;
-  font-weight: 700;
-  font-size: 1.2rem;
+  color: #ffb300;
+  font-weight: 800;
+  font-size: 1.3rem;
   margin-bottom: 10px;
   animation: bounce 0.7s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
 #limpar-tudo {
-  background: #dc3545;
+  background: linear-gradient(90deg, #dc3545 0%, #ff6b35 100%);
   color: #fff;
-  padding: 8px 22px;
-  border-radius: 8px;
+  padding: 12px 28px;
+  border-radius: 12px;
   font-size: 1.1em;
   cursor: pointer;
   border: none;
-  font-weight: 600;
-  box-shadow: 0 2px 8px #dc354544;
-  transition: background 0.2s, transform 0.2s;
+  font-weight: 800;
+  box-shadow: 0 4px 18px #dc354544, 0 2px 8px #0002;
+  transition: background 0.22s, box-shadow 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
 #limpar-tudo:hover {
-  background: #b71c1c;
-  transform: scale(1.04);
+  background: linear-gradient(90deg, #ff6b35 0%, #dc3545 100%);
+  box-shadow: 0 8px 32px #dc354566;
+  transform: translateY(-3px) scale(1.07);
 }
-#busca-rapida {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 20px auto;
-  display: block;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1.5px solid #ccc;
-  font-size: 1.05rem;
-  transition: border 0.2s;
-}
-#busca-rapida:focus {
-  border: 1.5px solid #ff9900;
-  outline: none;
-}
-#lista-imoveis {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
-  margin-top: 24px;
-}
-.card {
-  background: #f8f9fa;
-  border-radius: 14px;
-  box-shadow: 0 4px 18px #0001;
-  padding: 22px 18px 18px 18px;
+
+.card, .card-imovel {
+  background: #191919;
+  border-radius: 18px;
+  box-shadow: 0 8px 40px #ffb30033, 0 2px 10px #0008;
+  padding: 28px 22px 22px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   min-height: 320px;
   position: relative;
-  transition: box-shadow 0.3s, transform 0.3s;
-  border: 2px solid transparent;
-  animation: fade-in 0.7s;
+  transition: box-shadow 0.3s, transform 0.3s, border 0.3s;
+  border: 2.5px solid transparent;
+  animation: fadeIn 0.8s;
 }
-.card:hover {
-  box-shadow: 0 8px 32px #ff990044;
-  border: 2px solid #ff9900;
-  transform: translateY(-6px) scale(1.03);
+
+.card:hover, .card-imovel:hover {
+  box-shadow: 0 16px 60px #ffb30055;
+  border: 2.5px solid #ffb300;
+  transform: translateY(-8px) scale(1.04);
 }
-.card.editando {
-  border: 2px solid #ffc107;
-  box-shadow: 0 8px 32px #ffc10744;
-}
-.card h3 {
-  color: #ff9900;
-  font-size: 1.25rem;
+
+.card h3, .card-imovel h3 {
+  color: #ffb300;
+  font-size: 1.35rem;
   margin: 0 0 8px 0;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
-.card p {
-  margin: 0 0 6px 0;
-  color: #333;
-  font-size: 1.05rem;
-}
-.card-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: auto;
-}
-.card-actions button {
-  flex: 1;
-  padding: 10px 0;
-  border-radius: 8px;
+
+.card-imovel .imovel-acoes button {
+  background: linear-gradient(90deg, #ffb300 0%, #ff6b35 100%);
+  color: #fff;
   border: none;
-  font-size: 1.05rem;
-  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-right: 8px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 2px 8px #0001;
-}
-.card-actions .btn-edit {
-  background: #ffb84d;
-  color: #fff;
-}
-.card-actions .btn-edit:hover {
-  background: #ff9900;
-  color: #fff;
-  transform: scale(1.05);
-}
-.card-actions .btn-delete {
-  background: #dc3545;
-  color: #fff;
-}
-.card-actions .btn-delete:hover {
-  background: #b71c1c;
-  color: #fff;
-  transform: scale(1.05);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px #ffb30022;
 }
 
-.fade-in {
-  animation: fade-in 0.7s;
-}
-@keyframes fade-in {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes pop {0%{transform:scale(0.7);} 60%{transform:scale(1.2);} 100%{transform:scale(1);}}
-@keyframes bounce {0%{transform:translateY(-10px);} 50%{transform:translateY(5px);} 100%{transform:translateY(0);}}
-
-body.dark {
-  background: linear-gradient(120deg, #232733 0%, #181c23 100%);
-  color: #eee;
-}
-body.dark header {
-  background: linear-gradient(90deg, #232733 0%, #181c23 100%);
-  color: #ffb84d;
-}
-body.dark .admin-form-section, body.dark .admin-list-section {
-  background: #232733;
-  box-shadow: 0 4px 24px #0004;
-}
-body.dark .card {
-  background: #181c23;
-  color: #eee;
-  box-shadow: 0 4px 18px #0004;
-}
-body.dark .card h3 {
-  color: #ffb84d;
-}
-body.dark #imovel-form input, body.dark #imovel-form select, body.dark #imovel-form textarea {
-  background: #232733;
-  color: #eee;
-  border: 1.5px solid #444;
-}
-body.dark #imovel-form input:focus, body.dark #imovel-form select:focus, body.dark #imovel-form textarea:focus {
-  border: 1.5px solid #ffb84d;
-}
-body.dark #busca-rapida {
-  background: #232733;
-  color: #eee;
-  border: 1.5px solid #444;
-}
-body.dark #busca-rapida:focus {
-  border: 1.5px solid #ffb84d;
-}
-body.dark #limpar-tudo {
-  background: #b71c1c;
-}
-body.dark #limpar-tudo:hover {
-  background: #dc3545;
-}
-body.dark .card-actions .btn-edit {
-  background: #ffb84d;
-  color: #232733;
-}
-body.dark .card-actions .btn-edit:hover {
-  background: #ff9900;
-  color: #fff;
-}
-body.dark .card-actions .btn-delete {
-  background: #dc3545;
-  color: #fff;
-}
-body.dark .card-actions .btn-delete:hover {
-  background: #b71c1c;
-  color: #fff;
+.card-imovel .imovel-acoes button:hover {
+  background: linear-gradient(90deg, #ff6b35 0%, #ffb300 100%);
+  box-shadow: 0 6px 22px #ffb30033;
+  transform: translateY(-2px) scale(1.04);
 }
 
-body.dark #mensagem-feedback {
-  background: #222 !important;
-  color: #fff !important;
+#lista-imoveis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 28px 22px;
+  padding: 12px 0 0 0;
+  align-items: stretch;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  box-sizing: border-box;
+  max-width: 1200px;
 }
-body.dark .card {
-  box-shadow: 0 2px 8px #0006;
-}
-body, input, select, textarea, button {
-  font-size: 1.15em;
-}
-.admin-form-section, .admin-list-section {
-  padding: 32px 0;
-}
-#imovel-form input, #imovel-form select, #imovel-form textarea {
-  font-size: 1.13em;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-#imovel-form button {
-  font-size: 1.13em;
-  padding: 12px 24px;
-  margin-top: 10px;
-}
+
 #lista-imoveis .card {
   font-size: 1.12em;
   padding: 22px 18px;
   margin-bottom: 18px;
 }
+
 #busca-rapida {
   font-size: 1.13em;
   padding: 10px 14px;
 }
 body.dark .card,
+body.dark .card-imovel,
 body.dark .card p,
 body.dark .card b,
-body.dark .card span {
+body.dark .card span,
+body.dark .card-imovel span {
   color: #f5f5f5 !important;
+}
+body.dark {
+  background: linear-gradient(120deg, #121212 0%, #181818 100%) !important;
+  color: #f2f2f2 !important;
+}
+body.dark .card,
+body.dark .card-imovel {
+  background: #1a1a1a !important;
+  color: #f2f2f2 !important;
+  border-color: #333 !important;
+  box-shadow: 0 8px 40px #ffb30022, 0 2px 10px #0008;
+}
+body.dark .card h3,
+body.dark .card-imovel h3 {
+  color: #ffb300 !important;
+}
+body.dark .card .btn-edit,
+body.dark .card .btn-delete,
+body.dark .card-imovel .imovel-acoes button {
+  background: linear-gradient(90deg, #232323 0%, #333 100%) !important;
+  color: #ffb300 !important;
+  border: 1.5px solid #ffb300 !important;
+}
+body.dark .card .btn-edit:hover,
+body.dark .card .btn-delete:hover,
+body.dark .card-imovel .imovel-acoes button:hover {
+  background: linear-gradient(90deg, #333 0%, #232323 100%) !important;
+  color: #fff !important;
+}
+body.dark #imovel-form, body.dark .admin-form-section, body.dark .admin-list-section {
+  background: #191919 !important;
+  color: #f2f2f2 !important;
+}
+body.dark #imovel-form input,
+body.dark #imovel-form select,
+body.dark #imovel-form textarea {
+  background: #232323 !important;
+  color: #f2f2f2 !important;
+  border-color: #333 !important;
+}
+body.dark #imovel-form input:focus,
+body.dark #imovel-form select:focus,
+body.dark #imovel-form textarea:focus {
+  border-color: #ffb300 !important;
+  background: #232323 !important;
+  color: #fff !important;
+}
+body.dark #limpar-tudo {
+  background: linear-gradient(90deg, #333 0%, #ffb300 100%) !important;
+  color: #fff !important;
+  border: 1.5px solid #ffb300 !important;
+}
+body.dark #limpar-tudo:hover {
+  background: linear-gradient(90deg, #ffb300 0%, #333 100%) !important;
+  color: #232323 !important;
+}
+body.dark #toggle-dark {
+  color: #ffb300 !important;
+}
+body.dark #btn-logout {
+  background: #333 !important;
+  color: #ffb300 !important;
+  border: 1.5px solid #ffb300 !important;
+}
+
+
+#btn-logout {
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  background: #ff6b35;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 9999;
+}
+#toggle-dark {
+  position: fixed;
+  top: 62px;
+  right: 28px;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  color: #ff9900;
+  transition: color 0.2s;
+}
+#toggle-dark:hover {
+  color: #ff6b35;
+}
+@media (max-width: 600px) {
+  #btn-logout {
+    top: 10px;
+    right: 10px;
+    padding: 8px 14px;
+    font-size: 1em;
+  }
+  #toggle-dark {
+    top: 48px;
+    right: 14px;
+    font-size: 1.25em;
+  }
 } 

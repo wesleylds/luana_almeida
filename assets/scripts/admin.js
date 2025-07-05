@@ -366,6 +366,7 @@ form.addEventListener('submit', function(e) {
         let fachadaIndex = typeof atualizarPreviewImagens.fachadaIndex === 'number' ? atualizarPreviewImagens.fachadaIndex : 0;
         let files = Array.from(input.files);
         if (fachadaIndex >= files.length) fachadaIndex = 0;
+        // Sempre coloca a fachada como primeira
         if (fachadaIndex !== 0) {
             const dt = new DataTransfer();
             const fachada = files.splice(fachadaIndex, 1)[0];
@@ -375,6 +376,8 @@ form.addEventListener('submit', function(e) {
         }
     }
 });
+// Garante que ao editar, a fachada também seja a primeira
+if (typeof atualizarPreviewImagens.fachadaIndex === 'undefined') atualizarPreviewImagens.fachadaIndex = 0;
 
 // Limpar tudo
 limparTudoBtn.onclick = async () => {

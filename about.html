@@ -13,77 +13,167 @@
     <header class="header-principal">
         <div class="header-container">
             <div class="header-logo-nome">
-                <a href="index.html">
-                    <img src="assets/images/logo.png" alt="Luana Almeida Imóveis" class="logo-img">
+                <a href="index.html" aria-label="Página inicial">
+                    <img src="assets/images/logo.png" alt="Logo da Luana Almeida Imóveis" class="logo-img">
                 </a>
                 <a href="index.html" style="text-decoration: none;">
                     <span class="nome-empresa">Luana Almeida Imóveis</span>
                 </a>
             </div>
-            <nav class="header-nav">
-                <div class="hamburger-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            <div class="hamburger-menu" tabindex="0" aria-label="Abrir menu de navegação">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="header-nav" aria-label="Navegação principal">
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="imoveis.html">Imóveis</a></li>
-                    <li><a href="about.html">Sobre Nós</a></li>
+                    <li><a href="about.html" aria-current="page">Sobre Nós</a></li>
                     <li><a href="contact.html">Contato</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section id="sobre">
-        <h2>Sobre a Luana Almeida Imóveis</h2>
-        <div class="sobre-content">
-            <div class="sobre-foto">
-                <img src="assets/images/luana1.jpeg" alt="Foto de Luana Almeida">
-            </div>
-            <div class="sobre-texto">
-                <p class="sobre-destaque">Especialistas em conectar você ao <strong>imóvel dos seus sonhos</strong> com atendimento personalizado e transparente.</p>
-                
-                <h3>Nossos Valores</h3>
-                <div class="valores-grid">
-                    <div class="valor-item">
-                        <span class="valor-icon">🔍</span>
-                        <strong>Transparência</strong>
-                        <span>Negociações claras e honestas</span>
-                    </div>
-                    <div class="valor-item">
-                        <span class="valor-icon">💪</span>
-                        <strong>Compromisso</strong>
-                        <span>Dedicação total aos clientes</span>
-                    </div>
-                    <div class="valor-item">
-                        <span class="valor-icon">⭐</span>
-                        <strong>Qualidade</strong>
-                        <span>Imóveis selecionados com rigor</span>
-                    </div>
+    <main class="sobre-main">
+        <section class="sobre-hero fade-slide">
+            <div class="sobre-hero-grid">
+                <div class="sobre-hero-foto premium-foto-container">
+                    <img src="assets/images/luana1.jpeg" alt="Foto de Luana Almeida" class="sobre-foto-premium premium-foto">
                 </div>
-                
-                <h3>Por que escolher a Luana Almeida Imóveis?</h3>
-                <p>Ampla variedade de imóveis de alto padrão. Nossa equipe especializada acompanha você em cada etapa do processo, garantindo a melhor experiência.</p>
-                
-                <a href="https://wa.me/5516993394135?text=Olá!%20Tenho%20interesse%20em%20um%20imóvel." target="_blank" class="cta-sobre">
-                    <i class="fab fa-whatsapp"></i> Fale pelo WhatsApp
-                </a>
+                <div class="sobre-hero-texto">
+                    <h1 class="sobre-titulo premium-titulo">Sobre a Luana Almeida Imóveis</h1>
+                    <p class="sobre-apresentacao premium-desc">Aqui, cada cliente é único e cada história importa. Nossa missão é transformar sonhos em realidade, oferecendo um atendimento próximo, transparente e dedicado. Com experiência, carinho e profissionalismo, ajudamos você a encontrar o imóvel ideal para sua vida e sua família.</p>
+                </div>
+            </div>
+        </section>
+        <section class="sobre-valores fade-slide delay1">
+            <h2 class="sobre-subtitulo premium-subtitulo"><span class="premium-icon">💎</span> Nossos Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card-efeito valor-card-interativo premium-card">
+                    <span class="valor-icon">🔍</span>
+                    <strong>Transparência</strong>
+                    <div class="valor-desc">Negociações claras, honestas e respeito em todas as etapas do processo.</div>
+                </div>
+                <div class="valor-card-efeito valor-card-interativo premium-card">
+                    <span class="valor-icon">💪</span>
+                    <strong>Compromisso</strong>
+                    <div class="valor-desc">Dedicação total às suas necessidades, com acompanhamento do início ao fim.</div>
+                </div>
+                <div class="valor-card-efeito valor-card-interativo premium-card">
+                    <span class="valor-icon">⭐</span>
+                    <strong>Qualidade</strong>
+                    <div class="valor-desc">Imóveis selecionados com rigor, para garantir segurança e satisfação.</div>
+                </div>
+            </div>
+        </section>
+        <section class="sobre-diferenciais fade-slide delay2">
+            <h2 class="sobre-subtitulo premium-subtitulo"><span class="premium-icon">✨</span> Por que escolher a Luana Almeida Imóveis?</h2>
+            <p class="sobre-porque premium-desc">Mais do que vender imóveis, queremos construir relações de confiança. Conte com uma equipe apaixonada pelo que faz, pronta para ouvir, orientar e entregar sempre o melhor para você e sua família.</p>
+        </section>
+        <section class="sobre-contato fade-slide delay3">
+            <a href="https://wa.me/5516993394135?text=Olá!%20Tenho%20interesse%20em%20um%20imóvel." target="_blank" class="cta-sobre destaque-cta premium-cta">
+                <i class="fab fa-whatsapp premium-cta-icon"></i> Fale com a Luana pelo WhatsApp
+            </a>
+        </section>
+    </main>
+
+    <footer class="footer-premium">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="assets/images/luana1.jpeg" alt="Luana Almeida" class="footer-avatar-luana">
+                <div>
+                    <div class="footer-nome">Luana Almeida Imóveis</div>
+                    <div class="footer-slogan">Seu sonho, nosso compromisso.</div>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="https://wa.me/5516993394135" target="_blank" rel="noopener" aria-label="WhatsApp de contato" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/luana.almeida_corretora?igshid=bzQ5ZGJkajk0anJw" target="_blank" rel="noopener" aria-label="Instagram" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank" rel="noopener" aria-label="Facebook" class="facebook"><i class="fab fa-facebook"></i></a>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <p>© 2025 Luana Almeida Imóveis. Todos os direitos reservados.</p>
-        <p>Entre em contato: <a href="https://wa.me/5516993394135" target="_blank">WhatsApp</a></p>
-        <div class="social-media">
-            <a href="https://www.instagram.com/luana.almeida_corretora?igsh=bzQ5ZGJkajk0anJw" target="_blank">Instagram</a>
-            <a href="https://www.facebook.com/share/19FBt28T2P/?mibextid=qi2Omg" target="_blank">Facebook</a>
+        <div class="footer-bottom">
+            <div>&copy; 2025 Luana Almeida Imóveis. Todos os direitos reservados.</div>
+            <div class="footer-links">
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Uso</a>
+                <a href="mailto:luanaalmeidaimoveis@gmail.com" class="footer-contact"><i class="fas fa-envelope"></i> E-mail</a>
+                <a href="https://wa.me/5516993394135" target="_blank" rel="noopener" class="footer-contact"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
         </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/scripts/main.js"></script>
+    <script>
+        // Animações de scroll
+        $(document).ready(function() {
+            // Animação para elementos quando entram na viewport
+            function animateOnScroll() {
+                $('.valor-item, .estatistica-item').each(function() {
+                    const elementTop = $(this).offset().top;
+                    const elementBottom = elementTop + $(this).outerHeight();
+                    const viewportTop = $(window).scrollTop();
+                    const viewportBottom = viewportTop + $(window).height();
+
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('animate');
+                    }
+                });
+            }
+
+            // Executar animação no scroll
+            $(window).on('scroll', animateOnScroll);
+            
+            // Executar uma vez ao carregar a página
+            animateOnScroll();
+
+            // Efeito hover nos cards de valores
+            $('.valor-item').hover(
+                function() {
+                    $(this).find('.valor-icon').css('transform', 'scale(1.1)');
+                },
+                function() {
+                    $(this).find('.valor-icon').css('transform', 'scale(1)');
+                }
+            );
+
+            // Contador animado para estatísticas
+            function animateCounter(element, target) {
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.text(Math.floor(current) + (target === 100 ? '%' : target === 24 ? 'h' : '+'));
+                }, 20);
+            }
+
+            // Animar contadores quando entrarem na viewport
+            $('.estatistica-numero').each(function() {
+                const $this = $(this);
+                const text = $this.text();
+                const target = parseInt(text.replace(/[^\d]/g, ''));
+                
+                $this.text('0' + text.replace(/\d+/, ''));
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animateCounter($this, target);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(this);
+            });
+        });
+    </script>
 </body>
 </html>

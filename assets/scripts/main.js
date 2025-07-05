@@ -28,35 +28,50 @@ async function carregarImoveisPublico() {
     }
     
     lista.innerHTML = imoveis.map(imovel => {
-      // Descrição curta e elegante
       let descricao = imovel.descricao || '';
-      if (descricao.length > 300) {
-        descricao = descricao.substring(0, 300) + '...';
+      if (descricao.length > 180) {
+        descricao = descricao.substring(0, 180) + '...';
       }
       return `
       <div class="imovel-card">
-        <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="imovel-img" onerror="this.src='assets/images/exemplo-sala-estar.jpg'">
-        <div class="imovel-info">
-          <div class="imovel-titulo">${imovel.titulo}</div>
-          <div class="imovel-dados-destaque">
-            <span title="Preço"><i class="fa-solid fa-tag"></i> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</span>
-            <span title="Tipo"><i class="fa-solid fa-home"></i> ${imovel.tipo || '-'}</span>
-            <span title="Quartos"><i class="fa-solid fa-bed"></i> ${imovel.quartos ?? '-'} Quartos</span>
-            <span title="Salas"><i class="fa-solid fa-couch"></i> ${imovel.salas ?? '-'} Salas</span>
-            <span title="Banheiros"><i class="fa-solid fa-bath"></i> ${imovel.banheiros ?? '-'} Banheiros</span>
-            <span title="Área Total"><i class="fa-solid fa-ruler-combined"></i> ${imovel.area_total ? imovel.area_total + ' m²' : '-'}</span>
-            <span title="Área Construída"><i class="fa-solid fa-building"></i> ${imovel.area_construida ? imovel.area_construida + ' m²' : '-'}</span>
+        <div class="imovel-card-imgbox">
+          <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" data-id="${imovel.id}" class="imovel-img-click" onerror="this.src='assets/images/exemplo-sala-estar.jpg'">
+          <div class="imovel-card-overlay">
+            <div class="imovel-card-preco">R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</div>
+            <div class="imovel-card-local"><i class="fa-solid fa-map-marker-alt"></i> ${imovel.localizacao || '-'}</div>
           </div>
-          <div class="imovel-extra-info">
-            <span title="Localização"><i class="fa-solid fa-map-marker-alt"></i> ${imovel.localizacao || '-'}</span>
-            <span title="Código"><i class="fa-solid fa-hashtag"></i> IMV${imovel.codigo || '-'}</span>
-          </div>
-          <div class="imovel-descricao-simples">${descricao}</div>
+        </div>
+        <div class="imovel-card-titulo imovel-titulo-click" data-id="${imovel.id}">${imovel.titulo}</div>
+        <div class="imovel-card-detalhes">
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-home"></i> ${imovel.tipo || '-'}</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-bed"></i> ${imovel.quartos ?? '-'} Quartos</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-couch"></i> ${imovel.salas ?? '-'} Salas</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-bath"></i> ${imovel.banheiros ?? '-'} Banheiros</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-ruler-combined"></i> ${imovel.area_total ? imovel.area_total + ' m²' : '-'}</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-building"></i> ${imovel.area_construida ? imovel.area_construida + ' m²' : '-'}</div>
+          <div class="imovel-card-detalhe"><i class="fa-solid fa-hashtag"></i> IMV${imovel.codigo || '-'}</div>
+        </div>
+        <div class="imovel-descricao-simples" style="margin: 14px 18px 0 18px; color:#3b4a6b; font-size:1em;">${descricao}</div>
+        <div class="imovel-card-footer">
           <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
         </div>
       </div>
       `;
     }).join('');
+
+    // Adicionar evento de clique para imagem e título
+    document.querySelectorAll('.imovel-img-click').forEach(img => {
+      img.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        if (id) window.location.href = `detalhes.html?id=${id}`;
+      });
+    });
+    document.querySelectorAll('.imovel-titulo-click').forEach(titulo => {
+      titulo.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        if (id) window.location.href = `detalhes.html?id=${id}`;
+      });
+    });
   } catch (e) {
     console.error('Erro ao carregar imóveis:', e);
     lista.innerHTML = '<div style="color:#d00;text-align:center;">Erro ao carregar imóveis. Verifique se o servidor está rodando.</div>';

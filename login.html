@@ -58,11 +58,11 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Login Admin</h2>
-        <form id="login-form">
+        <h2>Login do Admin</h2>
+        <form id="login-form" autocomplete="off">
+            <div class="erro" id="erro-login" style="display:none"></div>
             <input type="text" id="usuario" placeholder="Usuário" required autofocus>
             <input type="password" id="senha" placeholder="Senha" required>
-            <div class="erro" id="erro-login"></div>
             <button type="submit">Entrar</button>
         </form>
     </div>
@@ -73,12 +73,7 @@
         const senha = document.getElementById('senha').value;
         const erro = document.getElementById('erro-login');
         erro.textContent = '';
-        const res = await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario, senha })
-        });
-        if (res.ok) {
+        if (usuario === 'luana' && senha === 'luana123') {
             localStorage.setItem('admin_auth', 'true');
             window.location.href = 'admin.html';
         } else {
