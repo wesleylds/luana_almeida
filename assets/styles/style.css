@@ -2129,7 +2129,8 @@ footer .social-media a:hover {
 .banner-carrossel {
     width: 100%;
     max-width: 1200px;
-    margin: 80px auto 16px auto;
+    margin: 120px auto 16px auto;
+    /* Aumenta o espaço acima do carrossel para afastar da barra de navegação */
     position: relative;
     border-radius: 18px;
     overflow: hidden;
