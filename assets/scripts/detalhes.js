@@ -1,4 +1,4 @@
-const API_URL = 'https://luana-almeida-site.onrender.com';
+const API_URL = 'http://localhost:8080';
 
 function getIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -61,7 +61,8 @@ function exibirDescricao(imovel) {
             <div><i class="fas fa-home"></i> <span>${imovel.tipo ?? '-'}</span></div>
             <div><i class="fas fa-bed"></i> ${imovel.quartos ?? '-'} Quartos</div>
             <div><i class="fas fa-couch"></i> ${imovel.salas ?? '-'} Salas</div>
-            <div><i class="fas fa-ruler-combined"></i> ${imovel.area ?? '-'} m²</div>
+            <div><i class="fas fa-ruler-combined"></i> ${imovel.area_total ? imovel.area_total + ' m²' : '-'} (Total)</div>
+            <div><i class="fas fa-building"></i> ${imovel.area_construida ? imovel.area_construida + ' m²' : '-'} (Construída)</div>
             <div><i class="fas fa-bath"></i> ${imovel.banheiros ?? '-'} Banheiros</div>
             <div><i class="fas fa-map-marker-alt"></i> ${imovel.localizacao ?? '-'}</div>
         </div>
@@ -85,7 +86,8 @@ function configurarContato(imovel) {
     msg += `\n• Tipo: ${imovel.tipo ?? '-'}`;
     msg += `\n• Quartos: ${imovel.quartos ?? '-'}`;
     msg += `\n• Salas: ${imovel.salas ?? '-'}`;
-    msg += `\n• Área: ${imovel.area ?? '-'} m²`;
+    msg += `\n• Área Total: ${imovel.area_total ? imovel.area_total + ' m²' : '-'}`;
+    msg += `\n• Área Construída: ${imovel.area_construida ? imovel.area_construida + ' m²' : '-'}`;
     msg += `\n• Banheiros: ${imovel.banheiros ?? '-'}`;
     msg += `\n• Localização: ${imovel.localizacao ?? '-'}`;
     msg += `\n• Preço: R$ ${Number(imovel.preco).toLocaleString('pt-BR')}`;

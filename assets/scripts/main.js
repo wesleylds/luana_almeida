@@ -1,349 +1,260 @@
-$(document).ready(function(){
-    // Inicializando o Carrossel Slick para Imóveis em Destaque
-    $('.imoveis-carrossel').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
-        dots: false,
-        infinite: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    });
+document.addEventListener('DOMContentLoaded', function () {
+  // Carregar imóveis na página imoveis.html
+  if (window.location.pathname.endsWith('imoveis.html')) {
+    carregarImoveisPublico();
+  }
 
-    // Inicializando o Carrossel Slick para Novos Imóveis
+  // Inicializar carrosséis se existirem
+  inicializarCarrosseis();
+});
+
+async function carregarImoveisPublico() {
+  const API_URL = 'http://localhost:8080';
+  const lista = document.getElementById('lista-imoveis');
+  if (!lista) return;
+  
+  lista.innerHTML = '<div style="color:#888;text-align:center;">Carregando imóveis...</div>';
+  
+  try {
+    const res = await fetch(`${API_URL}/imoveis`);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const imoveis = await res.json();
+    
+    if (!Array.isArray(imoveis) || imoveis.length === 0) {
+      lista.innerHTML = '<div style="color:#888;text-align:center;">Nenhum imóvel cadastrado ainda.</div>';
+      return;
+    }
+    
+    lista.innerHTML = imoveis.map(imovel => {
+      // Descrição curta e elegante
+      let descricao = imovel.descricao || '';
+      if (descricao.length > 300) {
+        descricao = descricao.substring(0, 300) + '...';
+      }
+      return `
+      <div class="imovel-card">
+        <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="imovel-img" onerror="this.src='assets/images/exemplo-sala-estar.jpg'">
+        <div class="imovel-info">
+          <div class="imovel-titulo">${imovel.titulo}</div>
+          <div class="imovel-dados-destaque">
+            <span title="Preço"><i class="fa-solid fa-tag"></i> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</span>
+            <span title="Tipo"><i class="fa-solid fa-home"></i> ${imovel.tipo || '-'}</span>
+            <span title="Quartos"><i class="fa-solid fa-bed"></i> ${imovel.quartos ?? '-'} Quartos</span>
+            <span title="Salas"><i class="fa-solid fa-couch"></i> ${imovel.salas ?? '-'} Salas</span>
+            <span title="Banheiros"><i class="fa-solid fa-bath"></i> ${imovel.banheiros ?? '-'} Banheiros</span>
+            <span title="Área Total"><i class="fa-solid fa-ruler-combined"></i> ${imovel.area_total ? imovel.area_total + ' m²' : '-'}</span>
+            <span title="Área Construída"><i class="fa-solid fa-building"></i> ${imovel.area_construida ? imovel.area_construida + ' m²' : '-'}</span>
+          </div>
+          <div class="imovel-extra-info">
+            <span title="Localização"><i class="fa-solid fa-map-marker-alt"></i> ${imovel.localizacao || '-'}</span>
+            <span title="Código"><i class="fa-solid fa-hashtag"></i> IMV${imovel.codigo || '-'}</span>
+          </div>
+          <div class="imovel-descricao-simples">${descricao}</div>
+          <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
+        </div>
+      </div>
+      `;
+    }).join('');
+  } catch (e) {
+    console.error('Erro ao carregar imóveis:', e);
+    lista.innerHTML = '<div style="color:#d00;text-align:center;">Erro ao carregar imóveis. Verifique se o servidor está rodando.</div>';
+  }
+}
+
+function inicializarCarrosseis() {
+  // Verificar se o jQuery e Slick estão carregados
+  if (typeof $ === 'undefined' || typeof $.fn.slick === 'undefined') {
+    console.log('jQuery ou Slick não estão carregados');
+    return;
+  }
+
+  // Inicializando o Carrossel Slick para Imóveis em Destaque
+  if ($('.destaque-carrossel').length) {
+    $('.destaque-carrossel').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  }
+
+  // Inicializando o Carrossel Slick para Novos Imóveis
+  if ($('.novos-imoveis-carrossel').length) {
     $('.novos-imoveis-carrossel').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
-        dots: false,
-        infinite: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
     });
+  }
 
-    // Inicializando o Carrossel Slick para Detalhes do Imóvel
-    $('.imovel-carrossel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        dots: false,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 3000
+  // Inicializando o Carrossel Slick para Detalhes do Imóvel
+  if ($('.detalhes-carrossel').length) {
+    $('.detalhes-carrossel').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 3000
     });
+  }
 
-    // Inicializando o Carrossel Slick para o Banner
+  // Inicializando o Carrossel Slick para o Banner
+  if ($('.banner-carrossel').length) {
     $('.banner-carrossel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        dots: false,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 3000
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: false,
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 3000
     });
+  }
 
-    // Inicializando o Carrossel Slick para Sobre
+  // Inicializando o Carrossel Slick para Sobre
+  if ($('.sobre-carrossel').length) {
     $('.sobre-carrossel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        dots: false,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 3000
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 3000
     });
+  }
 
+  // Inicializando o Carrossel Slick para Lista de Novos Imóveis
+  if ($('.imoveis-lista.novos').length) {
     $('.imoveis-lista.novos').slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1
-                }
-            }
-        ]
-    });
-
-    $('.imoveis-lista.destaques').slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1
-                }
-            }
-        ]
-    });
-
-    $('.slick-carousel').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: false,
-        dots: true,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 900,
-                settings: { slidesToShow: 2 }
-            },
-            {
-                breakpoint: 600,
-                settings: { slidesToShow: 1 }
-            }
-        ]
-    });
-
-    // Função de debounce para otimizar a busca
-    /**
-     * Executa uma função após um tempo de espera, ignorando chamadas repetidas nesse intervalo.
-     * @param {Function} func Função a ser executada
-     * @param {number} wait Tempo de espera em ms
-     * @returns {Function}
-     */
-    function debounce(func, wait) {
-        let timeout;
-        return function (...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
-
-    /**
-     * Remove acentos de uma string para facilitar buscas.
-     * @param {string} str
-     * @returns {string}
-     */
-    function removerAcentos(str) {
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    }
-
-    /**
-     * Busca imóveis na lista exibida, filtrando pelo termo digitado.
-     * Mostra feedback visual com o número de resultados encontrados.
-     */
-    function buscarImoveis() {
-        const buscaContainer = document.getElementById('busca');
-        const imoveisContainer = document.getElementById('imoveis-disponiveis');
-        if (!imoveisContainer) {
-            console.warn('Container #imoveis-disponiveis não encontrado.');
-            return;
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      arrows: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1
+          }
         }
-
-        let termo = document.getElementById('busca-imovel')?.value.toLowerCase() || '';
-        termo = removerAcentos(termo.trim());
-        let imoveis = imoveisContainer.querySelectorAll('.imovel');
-        let encontrados = 0;
-
-        imoveis.forEach(imovel => {
-            let textoBusca = imovel.innerText.toLowerCase();
-            textoBusca = removerAcentos(textoBusca);
-            let visivel = termo === '' || textoBusca.includes(termo);
-            imovel.style.display = visivel ? 'block' : 'none';
-            if (visivel && termo) encontrados++;
-        });
-
-        // Feedback visual
-        let mensagem = document.createElement('p');
-        mensagem.id = 'feedback-busca';
-        mensagem.style.color = encontrados > 0 ? '#28a745' : '#dc3545';
-        mensagem.textContent = termo
-            ? (encontrados > 0
-                ? `${encontrados} imóvel(is) encontrado(s).`
-                : 'Nenhum imóvel encontrado.')
-            : '';
-        let feedbackExistente = document.getElementById('feedback-busca');
-        if (feedbackExistente) feedbackExistente.remove();
-        if (buscaContainer) buscaContainer.appendChild(mensagem);
-    }
-    window.buscarImoveis = buscarImoveis;
-
-    // Aplicar debounce à busca
-    const buscaInput = document.getElementById('busca-imovel');
-    if (buscaInput) {
-        buscaInput.addEventListener('input', debounce(buscarImoveis, 300));
-    }
-
-    // Função para o formulário de contato
-    $('#contato-form').on('submit', function(e) {
-        e.preventDefault();
-        
-        const nome = $('#nome').val();
-        const email = $('#email').val();
-        const telefone = $('#telefone').val();
-        const mensagem = $('#mensagem').val();
-        
-        // Simulação de envio (substitua por integração com backend, se necessário)
-        const feedback = $('#feedback-contato');
-        feedback.text('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-        feedback.css('color', '#28a745');
-        
-        // Limpar formulário
-        $('#contato-form')[0].reset();
-        
-        // Remover feedback após 5 segundos
-        setTimeout(() => {
-            feedback.text('');
-        }, 5000);
+      ]
     });
-
-    // Carregar e filtrar imóveis
-    function aplicarFiltro(imoveis, filtros) {
-        return imoveis.filter(imovel => {
-            if (filtros.busca && !(imovel.titulo.toLowerCase().includes(filtros.busca) || imovel.localizacao.toLowerCase().includes(filtros.busca))) return false;
-            if (filtros.tipo && imovel.tipo !== filtros.tipo) return false;
-            if (filtros.precoMin && Number(imovel.preco) < Number(filtros.precoMin)) return false;
-            if (filtros.precoMax && Number(imovel.preco) > Number(filtros.precoMax)) return false;
-            if (filtros.quartos && Number(imovel.quartos) !== Number(filtros.quartos)) return false;
-            return true;
-        });
-    }
-
-    async function carregarImoveis() {
-        const res = await fetch(`${API_URL}/imoveis`);
-        let imoveis = await res.json();
-        const lista = $('#lista-imoveis');
-        if (imoveis.length === 0) {
-            lista.html('<div style="text-align:center;color:#888;font-size:1.1em;">Nenhum imóvel encontrado.</div>');
-        } else {
-            lista.html(imoveis.map(imovel => `
-                <div class='imovel'>
-                    <a href='detalhes.html?id=${imovel.id}'><img src='${API_URL}/uploads/${imovel.imagem}' alt='${imovel.titulo} #${imovel.codigo || imovel.id}'></a>
-                    <div class='imovel-info'>
-                        <a href='detalhes.html?id=${imovel.id}' style='text-decoration:none;'><h3>${imovel.titulo} <span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span></h3></a>
-                        <p class='descricao'>${imovel.descricao}</p>
-                        <p><b>Preço:</b> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</p>
-                        <p><b>Quartos:</b> ${imovel.quartos} | <b>Tipo:</b> ${imovel.tipo}</p>
-                        <a href='detalhes.html?id=${imovel.id}'>Ver Detalhes</a>
-                    </div>
-                </div>
-            `).join(''));
-        }
-    }
-    carregarImoveis();
-});
-
-const API_URL = 'https://luana-almeida-site.onrender.com';
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Renderização dinâmica para imoveis.html
-  const container = document.getElementById('lista-imoveis');
-  if (container && window.location.pathname.includes('imoveis.html')) {
-    fetch(`${API_URL}/imoveis`)
-      .then(res => res.json())
-      .then(imoveis => {
-        container.innerHTML = '';
-        imoveis.forEach(imovel => {
-          const card = document.createElement('div');
-          card.className = 'imovel';
-          card.innerHTML = `
-            <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img">
-            <div class="imovel-info">
-                <h3 class="titulo-imovel">${imovel.titulo}</h3>
-                <span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span>
-                <ul class="detalhes-lista">
-                    <li><span class="icon"><i class="fas fa-home"></i></span> <strong>Tipo:</strong> ${imovel.tipo ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-bed"></i></span> <strong>Quartos:</strong> ${imovel.quartos ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-couch"></i></span> <strong>Salas:</strong> ${imovel.salas ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-bath"></i></span> <strong>Banheiros:</strong> ${imovel.banheiros ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-ruler-combined"></i></span> <strong>Área:</strong> ${imovel.area ?? '-'} m²</li>
-                    <li><span class="icon"><i class="fas fa-map-marker-alt"></i></span> <strong>Localização:</strong> ${imovel.localizacao ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-dollar-sign"></i></span> <strong>Preço:</strong> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</li>
-                </ul>
-                <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      });
   }
+}
 
-  // Renderização dinâmica para index.html (apenas em Imóveis Novos, sem descrição)
-  const novosContainer = document.querySelector('#imoveis-novos .imoveis-lista');
-  if (novosContainer && window.location.pathname.endsWith('index.html')) {
-    fetch(`${API_URL}/imoveis`)
-      .then(res => res.json())
-      .then(imoveis => {
-        novosContainer.innerHTML = '';
-        imoveis.forEach(imovel => {
-          const card = document.createElement('div');
-          card.className = 'imovel';
-          card.innerHTML = `
-            <img src="${API_URL}/uploads/${imovel.imagem}" alt="${imovel.titulo}" class="fachada-img">
-            <div class="imovel-info">
-                <h3 class="titulo-imovel">${imovel.titulo}</h3>
-                <span class="codigo-imovel">#${imovel.codigo ? imovel.codigo : imovel.id}</span>
-                <ul class="detalhes-lista">
-                    <li><span class="icon"><i class="fas fa-home"></i></span> <strong>Tipo:</strong> ${imovel.tipo ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-bed"></i></span> <strong>Quartos:</strong> ${imovel.quartos ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-couch"></i></span> <strong>Salas:</strong> ${imovel.salas ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-bath"></i></span> <strong>Banheiros:</strong> ${imovel.banheiros ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-ruler-combined"></i></span> <strong>Área:</strong> ${imovel.area ?? '-'} m²</li>
-                    <li><span class="icon"><i class="fas fa-map-marker-alt"></i></span> <strong>Localização:</strong> ${imovel.localizacao ?? '-'}</li>
-                    <li><span class="icon"><i class="fas fa-dollar-sign"></i></span> <strong>Preço:</strong> R$ ${Number(imovel.preco).toLocaleString('pt-BR')}</li>
-                </ul>
-                <a href="detalhes.html?id=${imovel.id}" class="btn-detalhes">Ver Detalhes</a>
-            </div>
-          `;
-          novosContainer.appendChild(card);
-        });
-      });
-  }
-});
+// Função de debounce para otimizar buscas
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Função para remover acentos
+function removerAcentos(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// Função de busca de imóveis
+function buscarImoveis() {
+  const termo = document.getElementById('busca-input').value.toLowerCase();
+  const cards = document.querySelectorAll('.imovel-card');
+  
+  cards.forEach(card => {
+    const titulo = card.querySelector('h3').textContent.toLowerCase();
+    const localizacao = card.querySelector('p:last-child').textContent.toLowerCase();
+    const tituloSemAcentos = removerAcentos(titulo);
+    const localizacaoSemAcentos = removerAcentos(localizacao);
+    const termoSemAcentos = removerAcentos(termo);
+    
+    if (titulo.includes(termo) || localizacao.includes(termo) || 
+        tituloSemAcentos.includes(termoSemAcentos) || localizacaoSemAcentos.includes(termoSemAcentos)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Aplicar filtros de busca
+function aplicarFiltro(tipo, valor) {
+  const cards = document.querySelectorAll('.imovel-card');
+  
+  cards.forEach(card => {
+    let mostrar = true;
+    
+    if (tipo === 'preco') {
+      const precoTexto = card.querySelector('p').textContent;
+      const preco = parseFloat(precoTexto.replace(/[^\d,]/g, '').replace(',', '.'));
+      
+      if (valor === 'baixo' && preco > 200000) mostrar = false;
+      if (valor === 'medio' && (preco < 200000 || preco > 500000)) mostrar = false;
+      if (valor === 'alto' && preco < 500000) mostrar = false;
+    }
+    
+    if (tipo === 'tipo') {
+      const tipoImovel = card.querySelector('p:nth-child(3)').textContent.toLowerCase();
+      if (valor !== 'todos' && !tipoImovel.includes(valor)) mostrar = false;
+    }
+    
+    card.style.display = mostrar ? 'block' : 'none';
+  });
+}
 
 // Menu hambúrguer responsivo e acessível
 $(function() {

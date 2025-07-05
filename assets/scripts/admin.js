@@ -1,6 +1,6 @@
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
-const API_URL = 'https://luana-almeida-site.onrender.com';
+const API_URL = 'http://localhost:8080';
 const UPLOAD = '/api/upload';
 
 const form = document.getElementById('imovel-form');
@@ -70,6 +70,7 @@ function animarConfirmacao(emoji) {
 function limparForm() {
     form.reset();
     document.getElementById('imovel-id').value = '';
+    document.getElementById('codigo').value = '';
     editandoId = null;
     cancelarBtn.style.display = 'none';
     previewFachada.innerHTML = '';
@@ -99,7 +100,7 @@ function criarCard(imovel) {
     if (editandoId === imovel.id) card.classList.add('editando');
     card.innerHTML = `
         <div style="text-align:center;">
-            <img src="${API_URL}/uploads/${imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">
+            ${(imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${API_URL}/uploads/${imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">` : '<div style="color:#aaa;font-size:12px;">Sem imagem</div>'}
         </div>
         <h3>🏠 ${imovel.titulo}</h3>
         <p>${imovel.descricao}</p>
@@ -108,7 +109,8 @@ function criarCard(imovel) {
         <p><b>🛏️ Quartos:</b> ${imovel.quartos}</p>
         <p><b>🛋️ Salas:</b> ${imovel.salas}</p>
         <p><b>🚿 Banheiros:</b> ${imovel.banheiros}</p>
-        <p><b>📐 Área:</b> ${formatarArea(imovel.area)}</p>
+        <p><b>📐 Área Total:</b> ${imovel.area_total ? formatarArea(imovel.area_total) : '-'}</p>
+        <p><b>🏢 Área Construída:</b> ${imovel.area_construida ? formatarArea(imovel.area_construida) : '-'}</p>
         <p><b>📍 Localização:</b> ${imovel.localizacao}</p>
         <p><b>🔢 Código:</b> ${imovel.codigo || 'N/A'}</p>
         <p><b>👁️ Visitas:</b> ${imovel.visitas || 0}</p>
@@ -154,17 +156,39 @@ async function uploadImagem(file) {
 form.onsubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData(form);
-    // Adicionar imagens
-    const imagensInput = document.getElementById('fotos-imovel');
-    if (imagensInput && imagensInput.files.length > 0) {
-        for (let i = 0; i < imagensInput.files.length; i++) {
-            formData.append('imagens', imagensInput.files[i]);
+    // Remover todos os inputs 'codigo' duplicados, mantendo só um (garantia extra)
+    const codigos = form.querySelectorAll('input[name="codigo"]');
+    if (codigos.length > 1) {
+        for (let i = codigos.length - 1; i > 0; i--) {
+            codigos[i].parentNode.removeChild(codigos[i]);
         }
     }
+    const formData = new FormData(form);
+    // Garantir que area_total e area_construida sejam enviados como número
+    if (form.area_total && form.area_total.value) {
+        formData.set('area_total', String(Number(form.area_total.value)));
+    }
+    if (form.area_construida && form.area_construida.value) {
+        formData.set('area_construida', String(Number(form.area_construida.value)));
+    }
+    // Validação para imagem obrigatória
+    const fotosInput = document.getElementById('fotos-imovel');
+    if (!fotosInput.files || fotosInput.files.length === 0) {
+        alert('Selecione pelo menos uma imagem do imóvel!');
+        fotosInput.focus();
+        return;
+    }
+    // Geração de código único se não estiver editando
+    let codigoInput = document.getElementById('codigo');
+    if (!codigoInput.value) {
+        codigoInput.value = 'IMV' + Date.now();
+    }
+    // Sempre garanta que só tem UM campo 'codigo' no formData
+    formData.delete('codigo'); // remove todos antes
+    formData.set('codigo', codigoInput.value);
     // Validação dos campos obrigatórios
     const camposObrigatorios = [
-        'titulo', 'descricao', 'preco', 'quartos', 'salas', 'area', 'localizacao', 'tipo', 'banheiros'
+        'titulo', 'descricao', 'preco', 'quartos', 'salas', 'area_total', 'area_construida', 'localizacao', 'tipo', 'banheiros'
     ];
     for (const campo of camposObrigatorios) {
         if (!form[campo].value || form[campo].value.trim() === '') {
@@ -173,9 +197,14 @@ form.onsubmit = async (e) => {
             return;
         }
     }
-    if (isNaN(Number(form.area.value)) || Number(form.area.value) <= 0) {
-        alert('Informe uma área válida e maior que zero.');
-        form.area.focus();
+    if (isNaN(Number(form.area_total.value)) || Number(form.area_total.value) <= 0) {
+        alert('Informe uma Área Total válida e maior que zero.');
+        form.area_total.focus();
+        return;
+    }
+    if (isNaN(Number(form.area_construida.value)) || Number(form.area_construida.value) <= 0) {
+        alert('Informe uma Área Construída válida e maior que zero.');
+        form.area_construida.focus();
         return;
     }
     if (isNaN(Number(form.quartos.value)) || Number(form.quartos.value) < 0) {
@@ -206,8 +235,10 @@ form.onsubmit = async (e) => {
         });
         const data = await res.json();
         if (!res.ok) {
-            // Exibe a mensagem de erro retornada pelo backend
-            mostrarFeedback(data.error || 'Erro ao salvar imóvel', '#dc3545');
+            // Exibe a mensagem de erro detalhada do backend
+            let msg = data && data.error ? data.error : 'Erro ao salvar imóvel';
+            if (typeof msg !== 'string') msg = JSON.stringify(msg);
+            mostrarFeedback(msg, '#dc3545');
             return;
         }
         mostrarFeedback('Imóvel salvo com sucesso!');
@@ -228,11 +259,14 @@ function editarImovel(imovel) {
     form.quartos.value = imovel.quartos;
     form.salas.value = imovel.salas;
     form.banheiros.value = imovel.banheiros;
-    form.area.value = imovel.area;
+    form.area_total.value = imovel.area_total || '';
+    form.area_construida.value = imovel.area_construida || '';
+    form.codigo.value = imovel.codigo || '';
+
     form.localizacao.value = imovel.localizacao;
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
-    previewFachada.innerHTML = imovel.imagem ? `<img src="${API_URL}/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${API_URL}/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
     previewCarrossel.innerHTML = '';
 }
 

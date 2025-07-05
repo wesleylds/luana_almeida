@@ -1,0 +1,61 @@
+{
+  "imoveis": [
+    {
+      "id": 1,
+      "titulo": "csa",
+      "descricao": "2",
+      "preco": 22222.22,
+      "imagem": "1751679424735-1751325999121-1751323925699-apart_010 (2).jfif",
+      "carrossel": [],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 222,
+      "area_construida": 2,
+      "localizacao": "2",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751679424727",
+      "visitas": 1
+    },
+    {
+      "id": 2,
+      "titulo": "cssss",
+      "descricao": "2",
+      "preco": 2.22,
+      "imagem": "1751679845085-877414f1-ac17-4885-bd3c-a4a07bc5277d.jfif",
+      "carrossel": [
+        "1751679845086-1751325999121-1751323925699-apart_010 (2).jfif",
+        "1751679845086-1751325999122-1751323925699-apart_010 (4).jfif"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 2,
+      "localizacao": "2",
+      "tipo": "Apartamento",
+      "banheiros": 2,
+      "codigo": "IMV1751679845076",
+      "visitas": 1
+    },
+    {
+      "id": 3,
+      "titulo": "csa",
+      "descricao": "2222222222",
+      "preco": 22222222222.22,
+      "imagem": "1751680184619-ChatGPT Image 10 de jun. de 2025, 21_15_00.png",
+      "carrossel": [
+        "1751680184626-eabda8a9-a240-4b6c-9d2e-59f7a79bda76.jpg",
+        "1751680184627-WhatsApp Image 2025-06-10 at 19.32.08.jpeg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2222,
+      "area_construida": 222,
+      "localizacao": "22222222222222222",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751680184616",
+      "visitas": 1
+    }
+  ]
+}

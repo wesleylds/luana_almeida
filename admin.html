@@ -19,6 +19,7 @@
       <h2>➕ Adicionar/Editar Imóvel</h2>
       <form id="imovel-form" enctype="multipart/form-data">
         <input type="hidden" id="imovel-id" name="imovel-id">
+        <input type="hidden" id="codigo" name="codigo">
         <label for="titulo">Título do Imóvel <span style="color:#ff9900;">*</span></label>
         <input type="text" id="titulo" name="titulo" placeholder="Ex: Casa com piscina" required>
         <label for="tipo">Tipo <span style="color:#ff9900;">*</span></label>
@@ -38,8 +39,10 @@
         <input type="number" id="salas" name="salas" placeholder="Ex: 2" required min="0">
         <label for="banheiros">Banheiros <span style="color:#ff9900;">*</span></label>
         <input type="number" id="banheiros" name="banheiros" placeholder="Ex: 2" required min="0">
-        <label for="area">Área (m²) <span style="color:#ff9900;">*</span></label>
-        <input type="number" id="area" name="area" placeholder="Ex: 120" required min="1">
+        <label for="area_total">Área Total (m²) <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="area_total" name="area_total" placeholder="Ex: 250" required min="1">
+        <label for="area_construida">Área Construída (m²) <span style="color:#ff9900;">*</span></label>
+        <input type="number" id="area_construida" name="area_construida" placeholder="Ex: 180" required min="1">
         <label for="localizacao">Localização <span style="color:#ff9900;">*</span></label>
         <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Centro, Ribeirão Preto" required>
         <label for="descricao">Descrição <span style="color:#ff9900;">*</span></label>
