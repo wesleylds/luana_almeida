@@ -87,7 +87,6 @@ button:hover {
     background: linear-gradient(90deg, #ff6b35, #ff8c42);
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
     text-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
 }
 
@@ -1625,7 +1624,6 @@ footer .social-media a:hover {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
     font-size: 2.6em;
     font-weight: 800;
     margin-bottom: 18px;
@@ -1952,7 +1950,6 @@ footer .social-media a:hover {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
 }
 .premium-desc-contato {
     font-size: 1.13em;
@@ -1962,11 +1959,34 @@ footer .social-media a:hover {
     text-align: center;
 }
 .premium-redes-contato {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    justify-content: center;
-    margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin: 18px 0 0 0;
+  flex-wrap: wrap;
+}
+.premium-redes-contato .premium-rede-contato {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  background: #e9ecf3;
+  color: #3a4ca8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7em;
+  box-shadow: 0 2px 8px #3a4ca81a;
+  transition: background 0.22s, color 0.22s, transform 0.15s;
+}
+.premium-redes-contato .premium-rede-contato i {
+  margin: 0;
+}
+.premium-redes-contato .premium-rede-contato span {
+  display: none;
 }
 .premium-rede-contato {
     font-size: 1.15em;
@@ -2076,7 +2096,6 @@ footer .social-media a:hover {
     -webkit-background-clip: initial;
     background-clip: initial;
     -webkit-text-fill-color: initial;
-    text-fill-color: initial;
     letter-spacing: 1px;
 }
 
