@@ -85,6 +85,7 @@ app.get('/imoveis', async (req, res) => {
 // Detalhes de um imóvel
 app.get('/imoveis/:id', async (req, res) => {
   const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
   const result = await pool.query('SELECT * FROM imoveis WHERE id = $1', [id]);
   if (result.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
   const imovel = result.rows[0];
@@ -176,9 +177,9 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   let imagem = req.files && req.files[0] ? req.files[0].path : null;
   let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
   
-  const sql = `UPDATE imoveis SET titulo = ?, descricao = ?, preco = ?, imagem = COALESCE(?, imagem), carrossel = COALESCE(?, carrossel), quartos = ?, salas = ?, area_total = ?, area_construida = ?, localizacao = ?, tipo = ?, banheiros = ?, codigo = ? WHERE id = ?`;
-  
   const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
+  
   // Verifica duplicidade de código
   if (codigo) {
     const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1 AND id != $2', [codigo, id]);
@@ -228,6 +229,7 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
 // Deletar imóvel
 app.delete('/imoveis/:id', async (req, res) => {
   const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
   const del = await pool.query('DELETE FROM imoveis WHERE id = $1 RETURNING id', [id]);
   if (del.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
   res.json({ success: true });
