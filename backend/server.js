@@ -4,6 +4,7 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const pool = require('./db');
 const { Low } = require('lowdb');
 const { JSONFile } = require('lowdb/node');
 const dbFile = path.join(__dirname, 'db.json');
@@ -64,19 +65,18 @@ app.use(express.static(path.join(__dirname, '..')));
 // Listar imóveis
 app.get('/imoveis', async (req, res) => {
   console.log('[GET] /imoveis chamado');
-  await db.read();
-  const imoveis = db.data.imoveis.slice().sort((a, b) => b.id - a.id);
-  res.json(imoveis);
+  const result = await pool.query('SELECT * FROM imoveis ORDER BY id DESC');
+  res.json(result.rows);
 });
 
 // Detalhes de um imóvel
 app.get('/imoveis/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  const result = await db.query('SELECT * FROM imoveis WHERE id = $1', [id]);
+  const result = await pool.query('SELECT * FROM imoveis WHERE id = $1', [id]);
   if (result.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
   const imovel = result.rows[0];
   imovel.visitas = (imovel.visitas || 0) + 1;
-  await db.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
+  await pool.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
   res.json(imovel);
 });
 
@@ -109,31 +109,31 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   let imagem = req.files[0].filename;
   let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.filename) : [];
   
-  await db.read();
-  const nextId = (db.data.imoveis.reduce((max, i) => Math.max(max, i.id || 0), 0) + 1);
-  if (db.data.imoveis.some(i => i.codigo === codigoFinal)) {
+  // Verifica duplicidade de código
+  const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1', [codigoFinal]);
+  if (check.rows.length > 0) {
     return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
   }
-  const novoImovel = {
-    id: nextId,
-    titulo,
-    descricao,
-    preco: precoProcessado,
-    imagem,
-    carrossel,
-    quartos: quartos ? parseInt(quartos) : null,
-    salas: salas ? parseInt(salas) : null,
-    area_total: area_total ? parseFloat(area_total.toString()) : null,
-    area_construida: area_construida ? parseFloat(area_construida.toString()) : null,
-    localizacao,
-    tipo,
-    banheiros: banheiros ? parseInt(banheiros) : null,
-    codigo: codigoFinal,
-    visitas: 0
-  };
-  db.data.imoveis.push(novoImovel);
-  await db.write();
-  res.status(201).json(novoImovel);
+  const insert = await pool.query(
+    `INSERT INTO imoveis (titulo, descricao, preco, imagem, carrossel, quartos, salas, area_total, area_construida, localizacao, tipo, banheiros, codigo, visitas)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,0) RETURNING *`,
+    [
+      titulo,
+      descricao,
+      precoProcessado,
+      imagem,
+      JSON.stringify(carrossel),
+      quartos ? parseInt(quartos) : null,
+      salas ? parseInt(salas) : null,
+      area_total ? parseFloat(area_total.toString()) : null,
+      area_construida ? parseFloat(area_construida.toString()) : null,
+      localizacao,
+      tipo,
+      banheiros ? parseInt(banheiros) : null,
+      codigoFinal
+    ]
+  );
+  res.status(201).json(insert.rows[0]);
 
 });
 
@@ -151,43 +151,58 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   
   const sql = `UPDATE imoveis SET titulo = ?, descricao = ?, preco = ?, imagem = COALESCE(?, imagem), carrossel = COALESCE(?, carrossel), quartos = ?, salas = ?, area_total = ?, area_construida = ?, localizacao = ?, tipo = ?, banheiros = ?, codigo = ? WHERE id = ?`;
   
-  await db.read();
   const id = parseInt(req.params.id);
-  const idx = db.data.imoveis.findIndex(i => i.id === id);
-  if (idx === -1) return res.status(404).json({ error: 'Imóvel não encontrado' });
-  if (codigo && db.data.imoveis.some(i => i.codigo === codigo && i.id !== id)) {
-    return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
+  // Verifica duplicidade de código
+  if (codigo) {
+    const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1 AND id != $2', [codigo, id]);
+    if (check.rows.length > 0) {
+      return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
+    }
   }
-  const imovel = db.data.imoveis[idx];
-  db.data.imoveis[idx] = {
-    ...imovel,
-    titulo,
-    descricao,
-    preco: precoProcessado,
-    imagem: imagem || imovel.imagem,
-    carrossel,
-    quartos: quartos ? parseInt(quartos) : null,
-    salas: salas ? parseInt(salas) : null,
-    area_total: area_total ? parseFloat(area_total.toString()) : null,
-    area_construida: area_construida ? parseFloat(area_construida.toString()) : null,
-    localizacao,
-    tipo,
-    banheiros: banheiros ? parseInt(banheiros) : null,
-    codigo: codigo ? (Array.isArray(codigo) ? codigo[0] : codigo.toString()) : imovel.codigo
-  };
-  await db.write();
-  res.json(db.data.imoveis[idx]);
+  // Atualiza imóvel
+  const update = await pool.query(
+    `UPDATE imoveis SET
+      titulo = $1,
+      descricao = $2,
+      preco = $3,
+      imagem = COALESCE($4, imagem),
+      carrossel = $5,
+      quartos = $6,
+      salas = $7,
+      area_total = $8,
+      area_construida = $9,
+      localizacao = $10,
+      tipo = $11,
+      banheiros = $12,
+      codigo = $13
+     WHERE id = $14 RETURNING *`,
+    [
+      titulo,
+      descricao,
+      precoProcessado,
+      imagem,
+      JSON.stringify(carrossel),
+      quartos ? parseInt(quartos) : null,
+      salas ? parseInt(salas) : null,
+      area_total ? parseFloat(area_total.toString()) : null,
+      area_construida ? parseFloat(area_construida.toString()) : null,
+      localizacao,
+      tipo,
+      banheiros ? parseInt(banheiros) : null,
+      codigo ? (Array.isArray(codigo) ? codigo[0] : codigo.toString()) : null,
+      id
+    ]
+  );
+  if (update.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
+  res.json(update.rows[0]);
 
 });
 
 // Deletar imóvel
 app.delete('/imoveis/:id', async (req, res) => {
-  await db.read();
   const id = parseInt(req.params.id);
-  const idx = db.data.imoveis.findIndex(i => i.id === id);
-  if (idx === -1) return res.status(404).json({ error: 'Imóvel não encontrado' });
-  db.data.imoveis.splice(idx, 1);
-  await db.write();
+  const del = await pool.query('DELETE FROM imoveis WHERE id = $1 RETURNING id', [id]);
+  if (del.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
   res.json({ success: true });
 });
 
