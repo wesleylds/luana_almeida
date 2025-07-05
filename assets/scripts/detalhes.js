@@ -15,24 +15,36 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
     // Montar HTML das imagens para o Slick
     banner.innerHTML = `<div class="carrossel-imagens">${todasImagens.map(img => `<img src='https://luana-almeida.onrender.com/uploads/${img}' class='img-carrossel' style='max-width:100%;border-radius:8px;'>`).join('')}</div>`;
 
-    // Inicializar Slick Carousel
+    // Inicializar Slick Carousel premium
     $(function() {
       $('.carrossel-imagens').slick({
-        dots: true,
-        arrows: true,
+        dots: false,
+        arrows: false,
         infinite: true,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        fade: true,
+        speed: 600,
+        cssEase: 'cubic-bezier(0.77, 0, 0.175, 1)'
+      });
+      // Sincronizar miniaturas com slide
+      $('.carrossel-imagens').on('afterChange', function(event, slick, currentSlide){
+        thumbs.querySelectorAll('img').forEach(t => t.classList.remove('ativa'));
+        if (thumbs.querySelectorAll('img')[currentSlide]) {
+          thumbs.querySelectorAll('img')[currentSlide].classList.add('ativa');
+        }
       });
     });
 
-    // Miniaturas (opcional)
+    // Miniaturas premium
     thumbs.innerHTML = todasImagens.map((img, i) =>
-        `<img src="https://luana-almeida.onrender.com/uploads/${img}" class="${i === idxAtual ? 'ativa' : ''}" data-idx="${i}" alt="Miniatura" style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin:0 4px;cursor:pointer;">`
+        `<img src="https://luana-almeida.onrender.com/uploads/${img}" class="${i === idxAtual ? 'ativa' : ''}" data-idx="${i}" alt="Miniatura" style="width:70px;height:70px;object-fit:cover;border-radius:8px;margin:0 4px;cursor:pointer;">`
     ).join('');
     thumbs.querySelectorAll('img').forEach(img => {
         img.onclick = () => {
             $('.carrossel-imagens').slick('slickGoTo', Number(img.dataset.idx));
+            thumbs.querySelectorAll('img').forEach(t => t.classList.remove('ativa'));
+            img.classList.add('ativa');
         };
     });
 }
