@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8080'
+  : 'https://luanaimoveis-backend.onrender.com';
 
 function getIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
