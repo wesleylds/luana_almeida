@@ -185,3 +185,23 @@ async function carregarDetalhes() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarDetalhes);
+
+// MENU HAMBÚRGUER RESPONSIVO
+(function() {
+  const $menu = document.querySelector('.hamburger-menu');
+  const $nav = document.querySelector('.header-nav .nav-menu');
+  if (!$menu || !$nav) return;
+
+  function toggleMenu() {
+    $menu.classList.toggle('active');
+    $nav.classList.toggle('active');
+  }
+
+  $menu.addEventListener('click', toggleMenu);
+  $menu.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+})();
