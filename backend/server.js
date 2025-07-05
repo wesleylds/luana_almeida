@@ -71,12 +71,12 @@ app.get('/imoveis', async (req, res) => {
 
 // Detalhes de um imóvel
 app.get('/imoveis/:id', async (req, res) => {
-  await db.read();
   const id = parseInt(req.params.id);
-  const imovel = db.data.imoveis.find(i => i.id === id);
-  if (!imovel) return res.status(404).json({ error: 'Imóvel não encontrado' });
+  const result = await db.query('SELECT * FROM imoveis WHERE id = $1', [id]);
+  if (result.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
+  const imovel = result.rows[0];
   imovel.visitas = (imovel.visitas || 0) + 1;
-  await db.write();
+  await db.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
   res.json(imovel);
 });
 
