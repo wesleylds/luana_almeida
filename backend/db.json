@@ -214,6 +214,26 @@
       "banheiros": 2,
       "codigo": "IMV1751689523420",
       "visitas": 2
+    },
+    {
+      "id": 11,
+      "titulo": "2",
+      "descricao": "222",
+      "preco": 0.02,
+      "imagem": "1751691440787-casa_004.jpg",
+      "carrossel": [
+        "1751691440790-casa_005.webp",
+        "1751691440791-ft.jpg"
+      ],
+      "quartos": 2,
+      "salas": 2,
+      "area_total": 2,
+      "area_construida": 2,
+      "localizacao": "2",
+      "tipo": "Casa",
+      "banheiros": 2,
+      "codigo": "IMV1751691440781",
+      "visitas": 0
     }
   ]
 }
