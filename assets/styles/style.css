@@ -88,6 +88,28 @@ button:hover {
     -webkit-background-clip: text;
     background-clip: text;
     text-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
+    word-break: break-word;
+    max-width: 80vw;
+    white-space: normal;
+    text-align: center;
+    display: block;
+}
+
+@media (max-width: 800px) {
+  .nome-empresa {
+    font-size: 1.2em;
+    padding: 0 4vw;
+    max-width: 90vw;
+    line-height: 1.2;
+  }
+  .header-logo-nome {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .header-container {
+    padding: 0 2vw !important;
+  }
 }
 
 .header-nav {
