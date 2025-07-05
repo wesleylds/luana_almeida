@@ -2129,8 +2129,8 @@ footer .social-media a:hover {
 .banner-carrossel {
     width: 100%;
     max-width: 1200px;
-    margin: 120px auto 16px auto;
-    /* Aumenta o espaço acima do carrossel para afastar da barra de navegação */
+    margin: 80px auto 16px auto !important;
+    /* Espaço confortável acima do carrossel */
     position: relative;
     border-radius: 18px;
     overflow: hidden;
@@ -2236,21 +2236,20 @@ footer .social-media a:hover {
     .banner-carrossel, .miniaturas-carrossel, .detalhes-bloco { max-width: 98vw; }
 }
 @media (max-width: 900px) {
-    .banner-carrossel { margin: 80px auto 16px auto; }
+    .banner-carrossel { margin: 56px auto 16px auto !important; }
     .banner-carrossel img { height: 260px; }
     .miniaturas-carrossel img { width: 70px; height: 50px; }
     .contato-content { flex-direction: column; gap: 18px; }
     .contato-foto, .card-contato { max-width: 100%; }
 }
 @media (max-width: 600px) {
-    .banner-carrossel { margin: 48px auto 16px auto; }
+    .banner-carrossel { margin: 32px auto 16px auto !important; }
     .banner-carrossel img { height: 120px; }
     .miniaturas-carrossel img { width: 38px; height: 28px; }
     .detalhes-bloco { padding: 12px 4vw; }
 }
-
 @media (max-width: 600px) {
-    .banner-carrossel { margin: 40px auto 16px auto; }
+    .banner-carrossel { margin: 48px auto 16px auto; }
     .banner-carrossel img { height: 120px; }
     .miniaturas-carrossel img { width: 38px; height: 28px; }
     .detalhes-bloco { padding: 12px 4vw; }
