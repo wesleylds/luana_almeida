@@ -2267,15 +2267,15 @@ footer .social-media a:hover {
     .banner-carrossel, .miniaturas-carrossel, .detalhes-bloco { max-width: 98vw; }
 }
 @media (max-width: 900px) {
-    .banner-carrossel { margin: 56px auto 16px auto !important; max-width: 98vw; }
-    .banner-carrossel img { height: 320px; max-width: 100vw; }
+    .banner-carrossel { margin: 56px auto 16px auto !important; max-width: 98vw !important; }
+    .banner-carrossel img { height: 340px !important; max-width: 100vw !important; object-fit: cover !important; }
     .miniaturas-carrossel img { width: 70px; height: 50px; }
     .contato-content { flex-direction: column; gap: 18px; }
     .contato-foto, .card-contato { max-width: 100%; }
 }
 @media (max-width: 600px) {
-    .banner-carrossel { margin: 32px auto 16px auto !important; max-width: 98vw; }
-    .banner-carrossel img { height: 220px; max-width: 100vw; }
+    .banner-carrossel { margin: 28px auto 12px auto !important; max-width: 99vw !important; }
+    .banner-carrossel img { height: 260px !important; max-width: 100vw !important; object-fit: cover !important; }
     .miniaturas-carrossel img { width: 38px; height: 28px; }
     .detalhes-bloco { padding: 12px 4vw; }
 }
