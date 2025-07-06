@@ -267,7 +267,12 @@ function editarImovel(imovel) {
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
     previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
-    previewCarrossel.innerHTML = '';
+    // Preencher o previewCarrossel com as imagens do carrossel
+    if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
+        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
+    } else {
+        previewCarrossel.innerHTML = '';
+    }
 }
 
 cancelarBtn.onclick = () => {
