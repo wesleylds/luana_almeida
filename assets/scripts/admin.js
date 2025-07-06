@@ -174,13 +174,6 @@ form.onsubmit = async (e) => {
     if (form.area_construida && form.area_construida.value) {
         formData.set('area_construida', String(Number(form.area_construida.value)));
     }
-    // Validação para imagem obrigatória
-    const fotosInput = document.getElementById('fotos-imovel');
-    if (!fotosInput.files || fotosInput.files.length === 0) {
-        alert('Selecione pelo menos uma imagem do imóvel!');
-        fotosInput.focus();
-        return;
-    }
     // Geração de código único se não estiver editando
     let codigoInput = document.getElementById('codigo');
     if (!codigoInput.value) {
