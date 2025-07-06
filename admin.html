@@ -6,6 +6,7 @@
   <title>Painel de Administração de Imóveis 🏠</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles/admin.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
 </head>
 <body>
   <header>
@@ -76,17 +77,7 @@
   </main>
 
   <script src="assets/scripts/admin.js"></script>
-  <script>
-    const toggleDark = document.getElementById('toggle-dark');
-    let modoEscuro = false;
-    if (toggleDark) {
-        toggleDark.onclick = () => {
-            modoEscuro = !modoEscuro;
-            document.body.classList.toggle('dark', modoEscuro);
-            toggleDark.textContent = modoEscuro ? '☀️' : '🌙';
-        };
-    }
-  </script>
+
   <script>
   document.getElementById('btn-logout').onclick = function() {
       localStorage.removeItem('admin_auth');
