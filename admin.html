@@ -88,17 +88,6 @@
     }
   </script>
   <script>
-  // Máscara de moeda para o campo preço
-  const precoInput = document.getElementById('preco');
-  precoInput.addEventListener('input', function(e) {
-    let v = this.value.replace(/\D/g, '');
-    v = (v/100).toFixed(2) + '';
-    v = v.replace('.', ',');
-    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-    this.value = v;
-  });
-  </script>
-  <script>
   document.getElementById('btn-logout').onclick = function() {
       localStorage.removeItem('admin_auth');
       window.location.href = 'login.html';

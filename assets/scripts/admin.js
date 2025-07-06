@@ -2,6 +2,7 @@
 
 const API_URL = 'https://luana-almeida.onrender.com';
 const UPLOAD = '/api/upload';
+const BASE_URL = "https://luana-almeida.onrender.com/uploads/";
 
 const form = document.getElementById('imovel-form');
 const lista = document.getElementById('lista-imoveis');
@@ -259,10 +260,10 @@ function editarImovel(imovel) {
     cancelarBtn.style.display = 'inline-block';
 
     // Exibir a fachada (imagem principal)
-    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="backend/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${BASE_URL}${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
     // Exibir as demais imagens do carrossel
     if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
-        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="backend/uploads/${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
+        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="${BASE_URL}${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
     } else {
         previewCarrossel.innerHTML = '';
     }
