@@ -1,3 +1,4 @@
+// -ww- Weslley Lemos de Sousa
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
 const API_URL = 'https://luana-almeida.onrender.com';
@@ -18,11 +19,13 @@ const feedback = document.getElementById('mensagem-feedback');
 let editandoId = null;
 let filtroBusca = '';
 
+// -ww- Weslley Lemos de Sousa
 // Ativar modo escuro automático
 if (!document.body.classList.contains('dark')) {
     document.body.classList.add('dark');
 }
 
+// -ww- Weslley Lemos de Sousa
 // Alternância do botão de modo escuro
 const toggleDark = document.getElementById('toggle-dark');
 const iconDark = document.getElementById('icon-dark');
@@ -40,6 +43,7 @@ if (toggleDark && iconDark) {
     };
     atualizarIconeModo();
 }
+// -ww- Weslley Lemos de Sousa
 // Proteção de acesso ao admin
 if (!localStorage.getItem('admin_auth') || localStorage.getItem('admin_auth') !== 'true') {
     window.location.href = 'login.html';
@@ -159,7 +163,8 @@ async function uploadImagem(file) {
 form.onsubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    // Remover todos os inputs 'codigo' duplicados, mantendo só um (garantia extra)
+    // -ww- Weslley Lemos de Sousa
+// Remover todos os inputs 'codigo' duplicados, mantendo só um (garantia extra)
     const codigos = form.querySelectorAll('input[name="codigo"]');
     if (codigos.length > 1) {
         for (let i = codigos.length - 1; i > 0; i--) {
@@ -167,22 +172,27 @@ form.onsubmit = async (e) => {
         }
     }
     const formData = new FormData(form);
-    // Garantir que area_total e area_construida sejam enviados como número
+    // -ww- Weslley Lemos de Sousa
+// Garantir que area_total e area_construida sejam enviados como número
     if (form.area_total && form.area_total.value) {
         formData.set('area_total', String(Number(form.area_total.value)));
     }
     if (form.area_construida && form.area_construida.value) {
         formData.set('area_construida', String(Number(form.area_construida.value)));
     }
-    // Geração de código único se não estiver editando
+    // -ww- Weslley Lemos de Sousa
+// Geração de código único se não estiver editando
     let codigoInput = document.getElementById('codigo');
     if (!codigoInput.value) {
         codigoInput.value = 'IMV' + Date.now();
     }
-    // Sempre garanta que só tem UM campo 'codigo' no formData
-    formData.delete('codigo'); // remove todos antes
+    // -ww- Weslley Lemos de Sousa
+// Sempre garanta que só tem UM campo 'codigo' no formData
+    formData.delete('codigo'); // -ww- Weslley Lemos de Sousa
+// remove todos antes
     formData.set('codigo', codigoInput.value);
-    // Validação dos campos obrigatórios
+    // -ww- Weslley Lemos de Sousa
+// Validação dos campos obrigatórios
     const camposObrigatorios = [
         'titulo', 'descricao', 'preco', 'quartos', 'salas', 'localizacao', 'tipo', 'banheiros'
     ];
@@ -221,7 +231,8 @@ form.onsubmit = async (e) => {
         });
         const data = await res.json();
         if (!res.ok) {
-            // Exibe a mensagem de erro detalhada do backend
+            // -ww- Weslley Lemos de Sousa
+// Exibe a mensagem de erro detalhada do backend
             let msg = data && data.error ? data.error : 'Erro ao salvar imóvel';
             if (typeof msg !== 'string') msg = JSON.stringify(msg);
             mostrarFeedback(msg, '#dc3545');
@@ -252,16 +263,19 @@ function editarImovel(imovel) {
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
 
-    // Limpa previews antigos
+    // -ww- Weslley Lemos de Sousa
+// Limpa previews antigos
     previewFachada.innerHTML = '';
     previewCarrossel.innerHTML = '';
 
-    // Guarda as imagens existentes em inputs hidden
+    // -ww- Weslley Lemos de Sousa
+// Guarda as imagens existentes em inputs hidden
     const oldImagesContainer = document.createElement('div');
     oldImagesContainer.id = 'old-images';
     form.appendChild(oldImagesContainer);
 
-    // Exibir a fachada (imagem principal)
+    // -ww- Weslley Lemos de Sousa
+// Exibir a fachada (imagem principal)
     if (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') {
         const imgElement = document.createElement('img');
         imgElement.src = `${BASE_URL}${imovel.imagem}`;
@@ -277,7 +291,8 @@ function editarImovel(imovel) {
         oldImagesContainer.appendChild(hiddenInput);
     }
 
-    // Exibir as demais imagens do carrossel
+    // -ww- Weslley Lemos de Sousa
+// Exibir as demais imagens do carrossel
     if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
         imovel.carrossel.forEach(img => {
             const imgElement = document.createElement('img');
@@ -317,6 +332,7 @@ async function deletarImovel(id, card) {
     }
 }
 
+// -ww- Weslley Lemos de Sousa
 // Preview das imagens
 function atualizarPreviewImagens() {
     previewFachada.innerHTML = '';
@@ -325,14 +341,16 @@ function atualizarPreviewImagens() {
     let files = Array.from(input.files);
     if (files.length === 0) return;
 
-    // Estado: índice da fachada
+    // -ww- Weslley Lemos de Sousa
+// Estado: índice da fachada
     let fachadaIndex = 0;
     if (typeof atualizarPreviewImagens.fachadaIndex === 'number') {
         fachadaIndex = atualizarPreviewImagens.fachadaIndex;
         if (fachadaIndex >= files.length) fachadaIndex = 0;
     }
 
-    // Reordenar arquivos para garantir que a fachada seja a primeira
+    // -ww- Weslley Lemos de Sousa
+// Reordenar arquivos para garantir que a fachada seja a primeira
     if (fachadaIndex !== 0) {
         const fachada = files.splice(fachadaIndex, 1)[0];
         files.unshift(fachada);
@@ -340,7 +358,8 @@ function atualizarPreviewImagens() {
         atualizarPreviewImagens.fachadaIndex = 0;
     }
 
-    // Renderizar todas as imagens como miniaturas clicáveis
+    // -ww- Weslley Lemos de Sousa
+// Renderizar todas as imagens como miniaturas clicáveis
     files.forEach((file, idx) => {
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
@@ -356,7 +375,8 @@ function atualizarPreviewImagens() {
             atualizarPreviewImagens();
         };
         if (idx === 0) {
-            // Selo "Fachada"
+            // -ww- Weslley Lemos de Sousa
+// Selo "Fachada"
             const selo = document.createElement('div');
             selo.innerText = 'Fachada';
             selo.style.position = 'absolute';
@@ -381,7 +401,8 @@ function atualizarPreviewImagens() {
         }
     });
 
-    // Atualizar fachadaIndex para o input
+    // -ww- Weslley Lemos de Sousa
+// Atualizar fachadaIndex para o input
     input.fachadaIndex = 0;
 }
 document.getElementById('fotos-imovel').addEventListener('change', function() {
@@ -389,6 +410,7 @@ document.getElementById('fotos-imovel').addEventListener('change', function() {
     atualizarPreviewImagens();
 });
 
+// -ww- Weslley Lemos de Sousa
 // Ao enviar o formulário, reordene os arquivos para garantir que a fachada seja a primeira
 form.addEventListener('submit', function(e) {
     const input = document.getElementById('fotos-imovel');
@@ -396,7 +418,8 @@ form.addEventListener('submit', function(e) {
         let fachadaIndex = typeof atualizarPreviewImagens.fachadaIndex === 'number' ? atualizarPreviewImagens.fachadaIndex : 0;
         let files = Array.from(input.files);
         if (fachadaIndex >= files.length) fachadaIndex = 0;
-        // Sempre coloca a fachada como primeira
+        // -ww- Weslley Lemos de Sousa
+// Sempre coloca a fachada como primeira
         if (fachadaIndex !== 0) {
             const dt = new DataTransfer();
             const fachada = files.splice(fachadaIndex, 1)[0];
@@ -406,9 +429,11 @@ form.addEventListener('submit', function(e) {
         }
     }
 });
+// -ww- Weslley Lemos de Sousa
 // Garante que ao editar, a fachada também seja a primeira
 if (typeof atualizarPreviewImagens.fachadaIndex === 'undefined') atualizarPreviewImagens.fachadaIndex = 0;
 
+// -ww- Weslley Lemos de Sousa
 // Limpar tudo
 limparTudoBtn.onclick = async () => {
     if (!confirm('Tem certeza que deseja excluir TODOS os imóveis?')) return;
@@ -422,12 +447,14 @@ limparTudoBtn.onclick = async () => {
     await carregarImoveis();
 };
 
+// -ww- Weslley Lemos de Sousa
 // Busca rápida
 buscaRapida.oninput = function() {
     filtroBusca = this.value;
     carregarImoveis();
 };
 
+// -ww- Weslley Lemos de Sousa
 // Animações CSS
 const style = document.createElement('style');
 style.innerHTML = `
@@ -442,11 +469,13 @@ document.head.appendChild(style);
 
 carregarImoveis();
 
+// -ww- Weslley Lemos de Sousa
 // Validação visual dos campos obrigatórios
 form.addEventListener('submit', function(e) {
   let valido = true;
   form.querySelectorAll('[required]').forEach(campo => {
-    // Ignora area_total e area_construida mesmo que estejam marcados como required
+    // -ww- Weslley Lemos de Sousa
+// Ignora area_total e area_construida mesmo que estejam marcados como required
     if (campo.id === 'area_total' || campo.id === 'area_construida') return;
     if (!campo.value.trim()) {
       campo.style.border = '2px solid #ff9900';
@@ -460,7 +489,8 @@ form.addEventListener('submit', function(e) {
     mostrarMensagem('Preencha todos os campos obrigatórios!', false);
     return false;
   }
-  // Corrigir valor do preço para enviar só números (ex: 350000.00)
+  // -ww- Weslley Lemos de Sousa
+// Corrigir valor do preço para enviar só números (ex: 350000.00)
   const preco = document.getElementById('preco');
   if (preco) {
     let valor = preco.value.replace(/\./g, '').replace(',', '.').replace(/[^\d\.]/g, '');
@@ -468,6 +498,7 @@ form.addEventListener('submit', function(e) {
   }
 });
 
+// -ww- Weslley Lemos de Sousa
 // Mensagem de feedback visual
 function mostrarMensagem(msg, sucesso = true) {
   let div = document.getElementById('mensagem-feedback');

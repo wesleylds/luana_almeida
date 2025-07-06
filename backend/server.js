@@ -1,3 +1,4 @@
+// -ww- Weslley Lemos de Sousa
 // Configuração básica sem .env
 const express = require('express');
 const cors = require('cors');
@@ -25,6 +26,7 @@ initDB();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// -ww- Weslley Lemos de Sousa
 // CORS liberado para domínio do site publicado e localhost
 const allowedOrigins = [
   'https://luana-almeida-site.onrender.com',
@@ -46,6 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// -ww- Weslley Lemos de Sousa
 // Upload de imagens
 const uploadFolder = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadFolder)) fs.mkdirSync(uploadFolder);
@@ -66,6 +69,7 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage });
 
+// -ww- Weslley Lemos de Sousa
 // Conexão com PostgreSQL
 console.log('Conexão com PostgreSQL configurada!');
 
@@ -75,6 +79,7 @@ app.use('/uploads', express.static(uploadFolder));
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 app.use(express.static(path.join(__dirname, '..')));
 
+// -ww- Weslley Lemos de Sousa
 // Listar imóveis
 app.get('/imoveis', async (req, res) => {
   console.log('[GET] /imoveis chamado');
@@ -82,6 +87,7 @@ app.get('/imoveis', async (req, res) => {
   res.json(result.rows);
 });
 
+// -ww- Weslley Lemos de Sousa
 // Detalhes de um imóvel
 app.get('/imoveis/:id', async (req, res) => {
   const id = parseInt(req.params.id);
@@ -91,7 +97,8 @@ app.get('/imoveis/:id', async (req, res) => {
   const imovel = result.rows[0];
   imovel.visitas = (imovel.visitas || 0) + 1;
   await pool.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
-  // Conversão do carrossel para array
+  // -ww- Weslley Lemos de Sousa
+// Conversão do carrossel para array
   if (imovel.carrossel && typeof imovel.carrossel === 'string') {
     try {
       imovel.carrossel = JSON.parse(imovel.carrossel);
@@ -102,6 +109,7 @@ app.get('/imoveis/:id', async (req, res) => {
   res.json(imovel);
 });
 
+// -ww- Weslley Lemos de Sousa
 // Criar imóvel
 app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   console.log('[POST] /imoveis chamado');
@@ -110,15 +118,18 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   const { titulo, descricao, preco, quartos, salas, area_total, area_construida, localizacao, tipo, banheiros, codigo } = req.body;
   if (!titulo) return res.status(400).json({ error: 'Título é obrigatório' });
 
-  // Validação para imagem obrigatória
+  // -ww- Weslley Lemos de Sousa
+// Validação para imagem obrigatória
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ error: 'Pelo menos uma imagem é obrigatória.' });
   }
 
-  // Garantir que codigo seja string
+  // -ww- Weslley Lemos de Sousa
+// Garantir que codigo seja string
   let codigoFinal = Array.isArray(codigo) ? codigo[0] : codigo;
 
-  // Conversão segura dos campos numéricos
+  // -ww- Weslley Lemos de Sousa
+// Conversão segura dos campos numéricos
   function parseOrNull(val) {
     if (val === undefined || val === null || val === '') return null;
     const n = Number(val.toString().replace(/\./g, '').replace(',', '.'));
@@ -138,7 +149,8 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   let imagem = req.files[0].path;
   let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
   
-  // Verifica duplicidade de código
+  // -ww- Weslley Lemos de Sousa
+// Verifica duplicidade de código
   const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1', [codigoFinal]);
   if (check.rows.length > 0) {
     return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
@@ -165,6 +177,7 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
   res.status(201).json(insert.rows[0]);
 });
 
+// -ww- Weslley Lemos de Sousa
 // Editar imóvel
 app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   const {
@@ -180,14 +193,17 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
     if (isNaN(precoProcessado)) return res.status(400).json({ error: 'Preço inválido' });
   }
 
-  // Lógica de Imagens
+  // -ww- Weslley Lemos de Sousa
+// Lógica de Imagens
   const newFiles = req.files || [];
   const newImagePaths = newFiles.map(f => f.path);
 
-  // Imagem da fachada (principal)
+  // -ww- Weslley Lemos de Sousa
+// Imagem da fachada (principal)
   const imagem = newImagePaths.length > 0 ? newImagePaths[0] : null;
 
-  // Imagens do carrossel
+  // -ww- Weslley Lemos de Sousa
+// Imagens do carrossel
   let carrossel_existente = [];
   let carrossel = [];
   if (carrossel_existente_raw) {
@@ -203,7 +219,8 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
     }
     carrossel = carrossel_existente;
   } else {
-    // Buscar o carrossel atual do imóvel no banco
+    // -ww- Weslley Lemos de Sousa
+// Buscar o carrossel atual do imóvel no banco
     const result = await pool.query('SELECT carrossel FROM imoveis WHERE id = $1', [parseInt(req.params.id)]);
     if (result.rows.length > 0 && result.rows[0].carrossel) {
       try {
@@ -223,7 +240,8 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
 
-  // Verifica duplicidade de código
+  // -ww- Weslley Lemos de Sousa
+// Verifica duplicidade de código
   if (codigo) {
     const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1 AND id != $2', [codigo, id]);
     if (check.rows.length > 0) {
@@ -231,7 +249,8 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
     }
   }
 
-  // Atualiza imóvel
+  // -ww- Weslley Lemos de Sousa
+// Atualiza imóvel
   const update = await pool.query(
     `UPDATE imoveis SET
       titulo = $1,
@@ -270,6 +289,7 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   res.json(update.rows[0]);
 });
 
+// -ww- Weslley Lemos de Sousa
 // Deletar imóvel
 app.delete('/imoveis/:id', async (req, res) => {
   const id = parseInt(req.params.id);
@@ -279,6 +299,7 @@ app.delete('/imoveis/:id', async (req, res) => {
   res.json({ success: true });
 });
 
+// -ww- Weslley Lemos de Sousa
 // Endpoint de login simples
 app.post('/login', (req, res) => {
   const { usuario, senha } = req.body;
@@ -289,6 +310,7 @@ app.post('/login', (req, res) => {
   }
 });
 
+// -ww- Weslley Lemos de Sousa
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${PORT}`);

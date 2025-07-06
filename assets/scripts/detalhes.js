@@ -12,10 +12,12 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
     const todasImagens = [imagemPrincipal, ...imagens.filter(img => img !== imagemPrincipal)];
     let idxAtual = 0;
 
-    // Montar HTML das imagens para o Slick
+    // -ww- Weslley Lemos de Sousa
+// Montar HTML das imagens para o Slick
     banner.innerHTML = `<div class="carrossel-imagens">${todasImagens.map((img, idx) => `<img src='${img}' class='img-carrossel' style='max-width:100%;border-radius:8px;cursor:pointer;' data-idx='${idx}'>`).join('')}</div>`;
 
-    // Inicializar Slick Carousel igual ao index
+    // -ww- Weslley Lemos de Sousa
+// Inicializar Slick Carousel igual ao index
     $(function() {
       $('.carrossel-imagens').slick({
         dots: false,
@@ -27,7 +29,8 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
         speed: 500,
         cssEase: 'ease'
       });
-      // Sincronizar miniaturas com slide
+      // -ww- Weslley Lemos de Sousa
+// Sincronizar miniaturas com slide
       $('.carrossel-imagens').on('afterChange', function(event, slick, currentSlide){
         thumbs.querySelectorAll('img').forEach(t => t.classList.remove('ativa'));
         if (thumbs.querySelectorAll('img')[currentSlide]) {
@@ -36,7 +39,8 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
       });
     });
 
-    // Miniaturas premium
+    // -ww- Weslley Lemos de Sousa
+// Miniaturas premium
     thumbs.innerHTML = todasImagens.map((img, i) =>
         `<img src="${img}" class="${i === idxAtual ? 'ativa' : ''}" data-idx="${i}" alt="Miniatura" style="width:70px;height:70px;object-fit:cover;border-radius:8px;margin:0 4px;cursor:pointer;">`
     ).join('');
@@ -48,7 +52,8 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
         };
     });
 
-    // Modal fullscreen premium ao clicar na imagem principal
+    // -ww- Weslley Lemos de Sousa
+// Modal fullscreen premium ao clicar na imagem principal
     document.querySelectorAll('.img-carrossel').forEach(img => {
       img.onclick = (e) => {
         const startIdx = Number(img.dataset.idx);
@@ -57,6 +62,7 @@ function criarCarrosselNovo(imagens, imagemPrincipal) {
     });
 }
 
+// -ww- Weslley Lemos de Sousa
 // Modal fullscreen premium
 function abrirModalFullscreenPremium(imagens, startIdx) {
   let idx = startIdx;
@@ -111,7 +117,8 @@ function atualizarModalPremium(modal, imagens, idx) {
   setTimeout(() => {
     img.src = `${imagens[idx]}`;
     img.style.opacity = 1;
-    // Atualizar miniaturas
+    // -ww- Weslley Lemos de Sousa
+// Atualizar miniaturas
     modal.querySelectorAll('.modal-thumb-premium').forEach((thumb, i) => {
       thumb.classList.toggle('ativa', i === idx);
       thumb.style.opacity = i === idx ? 1 : 0.7;
@@ -154,7 +161,8 @@ function exibirMapa(localizacao) {
 function configurarContato(imovel) {
     const btn = document.querySelector('.btn-whatsapp');
     if (!btn) return;
-    // Montar mensagem personalizada
+    // -ww- Weslley Lemos de Sousa
+// Montar mensagem personalizada
     let msg = `Olá! Tenho interesse no imóvel ${imovel.titulo} (código: ${imovel.codigo ?? imovel.id}).\n`;
     msg += `\nCaracterísticas:`;
     msg += `\n• Tipo: ${imovel.tipo ?? '-'}`;
@@ -168,6 +176,7 @@ function configurarContato(imovel) {
     btn.href = `https://wa.me/5516993394135?text=${encodeURIComponent(msg)}`;
 }
 
+// -ww- Weslley Lemos de Sousa
 // Função para carregar os detalhes do imóvel
 async function carregarDetalhes() {
     const id = getIdFromUrl();
@@ -186,6 +195,7 @@ async function carregarDetalhes() {
 
 document.addEventListener('DOMContentLoaded', carregarDetalhes);
 
+// -ww- Weslley Lemos de Sousa
 // MENU HAMBÚRGUER RESPONSIVO
 (function() {
   const $menu = document.querySelector('.hamburger-menu');
