@@ -189,25 +189,36 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
 
   // Imagens do carrossel
   let carrossel_existente = [];
+  let carrossel = [];
   if (carrossel_existente_raw) {
     if (Array.isArray(carrossel_existente_raw)) {
       carrossel_existente = carrossel_existente_raw;
     } else if (typeof carrossel_existente_raw === 'string') {
       try {
-        // Pode ser uma string JSON ou uma string simples
         carrossel_existente = JSON.parse(carrossel_existente_raw);
         if (!Array.isArray(carrossel_existente)) carrossel_existente = [carrossel_existente_raw];
       } catch {
         carrossel_existente = [carrossel_existente_raw];
       }
     }
+    carrossel = carrossel_existente;
+  } else {
+    // Buscar o carrossel atual do imóvel no banco
+    const result = await pool.query('SELECT carrossel FROM imoveis WHERE id = $1', [parseInt(req.params.id)]);
+    if (result.rows.length > 0 && result.rows[0].carrossel) {
+      try {
+        carrossel = JSON.parse(result.rows[0].carrossel);
+        if (!Array.isArray(carrossel)) carrossel = [];
+      } catch {
+        carrossel = [];
+      }
+    }
   }
   const novasImagensCarrossel = newImagePaths.length > 1 ? newImagePaths.slice(1) : [];
-  // Se não houver novas imagens, mantém só as antigas; se houver, concatena
-  let carrossel = carrossel_existente;
   if (novasImagensCarrossel.length > 0) {
-    carrossel = [...carrossel_existente, ...novasImagensCarrossel];
+    carrossel = [...carrossel, ...novasImagensCarrossel];
   }
+
 
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
