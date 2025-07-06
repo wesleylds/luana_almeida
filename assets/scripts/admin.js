@@ -17,32 +17,34 @@ const feedback = document.getElementById('mensagem-feedback');
 let editandoId = null;
 let filtroBusca = '';
 
+// Ativar modo escuro automático
+if (!document.body.classList.contains('dark')) {
+    document.body.classList.add('dark');
+}
+
+// Alternância do botão de modo escuro
+const toggleDark = document.getElementById('toggle-dark');
+const iconDark = document.getElementById('icon-dark');
+if (toggleDark && iconDark) {
+    function atualizarIconeModo() {
+        if (document.body.classList.contains('dark')) {
+            iconDark.textContent = '☀️';
+        } else {
+            iconDark.textContent = '🌙';
+        }
+    }
+    toggleDark.onclick = function() {
+        document.body.classList.toggle('dark');
+        atualizarIconeModo();
+    };
+    atualizarIconeModo();
+}
 // Proteção de acesso ao admin
 if (!localStorage.getItem('admin_auth') || localStorage.getItem('admin_auth') !== 'true') {
     window.location.href = 'login.html';
 }
 
-// Botão de logout
-function criarLogout() {
-    const btn = document.createElement('button');
-    btn.textContent = 'Sair';
-    btn.style.position = 'fixed';
-    btn.style.top = '18px';
-    btn.style.right = '24px';
-    btn.style.background = '#ff6b35';
-    btn.style.color = '#fff';
-    btn.style.border = 'none';
-    btn.style.padding = '10px 22px';
-    btn.style.borderRadius = '8px';
-    btn.style.fontWeight = '600';
-    btn.style.cursor = 'pointer';
-    btn.onclick = function() {
-        localStorage.removeItem('admin_auth');
-        window.location.href = 'login.html';
-    };
-    document.body.appendChild(btn);
-}
-criarLogout();
+
 
 function mostrarFeedback(msg, cor = '#28a745') {
     feedback.textContent = msg;

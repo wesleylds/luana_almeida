@@ -95,22 +95,8 @@ body:not(.dark) #btn-logout {
     padding: 0 12px;
     width: 100%;
   }
-  #toggle-dark {
-    margin-left: 0;
-    margin-top: 8px;
-    font-size: 1.3em;
-    align-self: flex-end;
-  }
-  #btn-logout {
-    position: static;
-    display: block;
-    width: 100%;
-    margin: 0 0 10px 0;
-    font-size: 1em;
-    padding: 10px 0;
-    border-radius: 8px;
-    box-sizing: border-box;
-  }
+
+
 }
 
 
@@ -120,38 +106,63 @@ body:not(.dark) #btn-logout {
 }
 
 header {
-  background: linear-gradient(90deg, #181818 0%, #262626 100%);
-  color: #ffb300;
-  padding: 20px 0 16px 0;
-  text-align: center;
-  box-shadow: 0 6px 24px #ffb30022, 0 2px 8px #0005;
-  position: sticky;
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
   top: 0;
-  z-index: 20;
-  border-bottom: 3px solid #ffb300;
-  letter-spacing: 1.2px;
   position: relative;
-  min-height: 64px;
+  background: linear-gradient(90deg, #181818 0%, #262626 100%);
+  box-shadow: 0 2px 16px #0002;
+  z-index: 10;
 }
-header h1 {
-  font-size: 2.4rem;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  margin: 0;
+
+.admin-header-flex {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 18px;
-  color: #ffb300;
-  font-family: 'Montserrat', Arial, sans-serif;
-  flex-wrap: wrap;
-  word-break: break-word;
+  justify-content: space-between;
+  padding: 0 40px 0 40px;
+  min-height: 72px;
+  gap: 12px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
-#toggle-dark, #btn-logout {
-  font-family: inherit;
+.admin-header-title {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
-#toggle-dark {
-  margin-left: 18px;
+.admin-header-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.admin-header-btns button {
+  font-size: 1.1em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  min-width: 34px;
+  min-height: 34px;
+  background: #ffe7b3;
+  color: #ff9900;
+  border: 1.5px solid #ffb300;
+  transition: background 0.2s, color 0.2s;
+}
+body.dark .admin-header-btns button, body.dark-mode .admin-header-btns button {
+  background: #23272f;
+  color: #ffbe76;
+  border: 1.5px solid #444;
+}
+.admin-header-btns button:hover {
+  background: #ffb300;
+  color: #fff;
+}
+body.dark .admin-header-btns button:hover, body.dark-mode .admin-header-btns button:hover {
+  background: #2d3a4a;
+  color: #fff;
+}
+
 }
 
 #toggle-dark {
@@ -196,71 +207,22 @@ header h1 {
   box-shadow: 0 4px 18px #ffb30044;
 }
 
-
-#btn-logout span {
-  font-size: 1.3em;
-  color: #fff;
-  line-height: 1;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#btn-logout:active {
-  background: #ff9900;
-}
-
-@media (max-width: 600px) {
-  header {
-    min-height: 48px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+@media (max-width: 900px) {
+  .admin-header-flex {
+    padding: 0 12px;
+    min-height: 60px;
   }
-  header h1 {
-    font-size: 1.15rem;
+  .admin-header-title {
+    font-size: 1.2rem;
+  }
+  .admin-header-btns {
     gap: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-    padding: 0 10px;
-    width: 100%;
-  }
-  #toggle-dark {
-    margin-left: 0;
-    margin-top: 8px;
-    font-size: 1.15em;
-    align-self: flex-end;
-  }
-  #btn-logout {
-    margin-left: 0;
-    margin-top: 8px;
-    padding: 7px 13px 7px 9px;
-    font-size: 0.97em;
   }
 }
 
 
-#btn-logout:active {
-  background: #ff9900;
-}
 
-#toggle-dark:hover {
-  color: #fff;
-  transform: scale(1.15) rotate(-8deg);
-}
 
-header h1 {
-  font-size: 2.1rem;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-}
 
 main {
   max-width: 1200px;
@@ -579,47 +541,4 @@ body.dark #btn-logout {
   background: #333 !important;
   color: #ffb300 !important;
   border: 1.5px solid #ffb300 !important;
-}
-
-
-#btn-logout {
-  position: fixed;
-  top: 18px;
-  right: 24px;
-  background: #ff6b35;
-  color: #fff;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 9999;
-}
-#toggle-dark {
-  position: fixed;
-  top: 62px;
-  right: 28px;
-  font-size: 1.5em;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 9999;
-  color: #ff9900;
-  transition: color 0.2s;
-}
-#toggle-dark:hover {
-  color: #ff6b35;
-}
-@media (max-width: 600px) {
-  #btn-logout {
-    top: 10px;
-    right: 10px;
-    padding: 8px 14px;
-    font-size: 1em;
-  }
-  #toggle-dark {
-    top: 48px;
-    right: 14px;
-    font-size: 1.25em;
-  }
 } 

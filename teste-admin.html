@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste - Painel de Administração</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles/admin.css">
+  <style>
+    body {
+      background: #f5f5f5;
+    }
+    .teste-info {
+      background: #fff;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="admin-header-flex">
+      <div class="admin-header-title">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:8px;">
+          <path d="M3 21V11.5C3 10.1193 4.11929 9 5.5 9H18.5C19.8807 9 21 10.1193 21 11.5V21" stroke="#ff9900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Painel de Administração
+      </div>
+      <div class="admin-header-btns">
+        <button id="toggle-dark" title="Alternar modo escuro/claro">
+          <span id="icon-dark">🌙</span> Modo
+        </button>
+        <button id="btn-logout" title="Sair">
+          <span style="vertical-align:middle;">⏻</span> Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="teste-info">
+    <h2>🧪 Teste do Cabeçalho</h2>
+    <p>Este é um teste para verificar se o botão "Sair" está posicionado corretamente no cabeçalho junto com o botão de modo escuro.</p>
+    <p><strong>Status:</strong> <span id="status">Verificando...</span></p>
+    <p><strong>Botão Sair:</strong> <span id="btn-status">Verificando...</span></p>
+    <p><strong>Botão Modo:</strong> <span id="toggle-status">Verificando...</span></p>
+  </div>
+
+  <script>
+    // Verificar se os botões estão no lugar certo
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('header');
+      const adminHeaderBtns = document.querySelector('.admin-header-btns');
+      const btnLogout = document.getElementById('btn-logout');
+      const toggleDark = document.getElementById('toggle-dark');
+      
+      const status = document.getElementById('status');
+      const btnStatus = document.getElementById('btn-status');
+      const toggleStatus = document.getElementById('toggle-status');
+      
+      // Verificar se o cabeçalho existe
+      if (header) {
+        status.textContent = '✅ Cabeçalho encontrado';
+      } else {
+        status.textContent = '❌ Cabeçalho não encontrado';
+      }
+      
+      // Verificar se a div admin-header-btns existe
+      if (adminHeaderBtns) {
+        btnStatus.textContent = '✅ Container admin-header-btns encontrado';
+      } else {
+        btnStatus.textContent = '❌ Container admin-header-btns não encontrado';
+      }
+      
+      // Verificar se o botão logout está na div admin-header-btns
+      if (adminHeaderBtns && adminHeaderBtns.contains(btnLogout)) {
+        btnStatus.textContent += ' - ✅ Botão Sair está no container correto';
+      } else {
+        btnStatus.textContent += ' - ❌ Botão Sair NÃO está no container correto';
+      }
+      
+      // Verificar se o botão toggle está na div admin-header-btns
+      if (adminHeaderBtns && adminHeaderBtns.contains(toggleDark)) {
+        toggleStatus.textContent = '✅ Botão Modo está no container correto';
+      } else {
+        toggleStatus.textContent = '❌ Botão Modo NÃO está no container correto';
+      }
+      
+      // Verificar o CSS computado
+      const btnLogoutStyle = window.getComputedStyle(btnLogout);
+      const toggleDarkStyle = window.getComputedStyle(toggleDark);
+      
+      console.log('Botão Sair - position:', btnLogoutStyle.position);
+      console.log('Botão Modo - position:', toggleDarkStyle.position);
+      console.log('Botão Sair - display:', btnLogoutStyle.display);
+      console.log('Botão Modo - display:', toggleDarkStyle.display);
+    });
+    
+    // Evento do botão logout
+    document.getElementById('btn-logout').onclick = function() {
+      alert('Botão Sair clicado! Funcionando corretamente.');
+    };
+    
+    // Evento do botão toggle
+    document.getElementById('toggle-dark').onclick = function() {
+      document.body.classList.toggle('dark');
+      const iconDark = document.getElementById('icon-dark');
+      if (document.body.classList.contains('dark')) {
+        iconDark.textContent = '☀️';
+      } else {
+        iconDark.textContent = '🌙';
+      }
+      alert('Botão Modo clicado! Funcionando corretamente.');
+    };
+  </script>
+</body>
+</html> 

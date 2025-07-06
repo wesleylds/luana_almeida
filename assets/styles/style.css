@@ -6,6 +6,39 @@
 }
 
 body {
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: linear-gradient(120deg, #191b22 0%, #23272f 100%) !important;
+    color: #e6e6e6 !important;
+}
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode label, body.dark-mode p, body.dark-mode span, body.dark-mode div, body.dark-mode .card {
+    color: #e6e6e6 !important;
+}
+
+body.dark-mode input, body.dark-mode textarea, body.dark-mode select {
+    background: #23272f !important;
+    color: #e6e6e6 !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode button, body.dark-mode .btn, body.dark-mode .btn-edit, body.dark-mode .btn-delete {
+    background-color: #222d3a !important;
+    color: #ffbe76 !important;
+    border: none;
+}
+
+body.dark-mode button:hover, body.dark-mode .btn:hover, body.dark-mode .btn-edit:hover, body.dark-mode .btn-delete:hover {
+    background-color: #2d3a4a !important;
+    color: #fff !important;
+}
+
+body.dark-mode .header-principal {
+    background: linear-gradient(90deg, #101217 0%, #181b22 100%) !important;
+}
+
     background: linear-gradient(120deg, #f6f7fb 0%, #e9ecf3 100%) !important;
     font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
     color: #223 !important;
