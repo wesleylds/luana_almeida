@@ -188,7 +188,7 @@ form.onsubmit = async (e) => {
     formData.set('codigo', codigoInput.value);
     // Validação dos campos obrigatórios
     const camposObrigatorios = [
-        'titulo', 'descricao', 'preco', 'quartos', 'salas', 'area_total', 'area_construida', 'localizacao', 'tipo', 'banheiros'
+        'titulo', 'descricao', 'preco', 'quartos', 'salas', 'localizacao', 'tipo', 'banheiros'
     ];
     for (const campo of camposObrigatorios) {
         if (!form[campo].value || form[campo].value.trim() === '') {
@@ -196,16 +196,6 @@ form.onsubmit = async (e) => {
             form[campo].focus();
             return;
         }
-    }
-    if (isNaN(Number(form.area_total.value)) || Number(form.area_total.value) <= 0) {
-        alert('Informe uma Área Total válida e maior que zero.');
-        form.area_total.focus();
-        return;
-    }
-    if (isNaN(Number(form.area_construida.value)) || Number(form.area_construida.value) <= 0) {
-        alert('Informe uma Área Construída válida e maior que zero.');
-        form.area_construida.focus();
-        return;
     }
     if (isNaN(Number(form.quartos.value)) || Number(form.quartos.value) < 0) {
         alert('Informe um número de quartos válido.');
@@ -421,6 +411,8 @@ carregarImoveis();
 form.addEventListener('submit', function(e) {
   let valido = true;
   form.querySelectorAll('[required]').forEach(campo => {
+    // Ignora area_total e area_construida mesmo que estejam marcados como required
+    if (campo.id === 'area_total' || campo.id === 'area_construida') return;
     if (!campo.value.trim()) {
       campo.style.border = '2px solid #ff9900';
       valido = false;
