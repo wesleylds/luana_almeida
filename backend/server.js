@@ -190,10 +190,24 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
   // Imagens do carrossel
   let carrossel_existente = [];
   if (carrossel_existente_raw) {
-    carrossel_existente = Array.isArray(carrossel_existente_raw) ? carrossel_existente_raw : [carrossel_existente_raw];
+    if (Array.isArray(carrossel_existente_raw)) {
+      carrossel_existente = carrossel_existente_raw;
+    } else if (typeof carrossel_existente_raw === 'string') {
+      try {
+        // Pode ser uma string JSON ou uma string simples
+        carrossel_existente = JSON.parse(carrossel_existente_raw);
+        if (!Array.isArray(carrossel_existente)) carrossel_existente = [carrossel_existente_raw];
+      } catch {
+        carrossel_existente = [carrossel_existente_raw];
+      }
+    }
   }
   const novasImagensCarrossel = newImagePaths.length > 1 ? newImagePaths.slice(1) : [];
-  const carrossel = [...carrossel_existente, ...novasImagensCarrossel];
+  // Se não houver novas imagens, mantém só as antigas; se houver, concatena
+  let carrossel = carrossel_existente;
+  if (novasImagensCarrossel.length > 0) {
+    carrossel = [...carrossel_existente, ...novasImagensCarrossel];
+  }
 
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
