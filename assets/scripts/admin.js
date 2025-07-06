@@ -254,14 +254,15 @@ function editarImovel(imovel) {
     form.area_total.value = imovel.area_total || '';
     form.area_construida.value = imovel.area_construida || '';
     form.codigo.value = imovel.codigo || '';
-
     form.localizacao.value = imovel.localizacao;
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
-    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
-    // Preencher o previewCarrossel com as imagens do carrossel
+
+    // Exibir a fachada (imagem principal)
+    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="backend/uploads/${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    // Exibir as demais imagens do carrossel
     if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
-        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
+        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="backend/uploads/${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
     } else {
         previewCarrossel.innerHTML = '';
     }
