@@ -2195,11 +2195,18 @@ footer .social-media a:hover {
 .carrossel-seta.dir { right: 18px; }
 .miniaturas-carrossel {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Alinha miniaturas à esquerda */
     gap: 14px;
     margin: 12px auto 36px auto;
     max-width: 1200px;
+    overflow-x: auto; /* Permite rolagem horizontal */
+    padding-bottom: 8px; /* Espaço para barra de rolagem */
+    scrollbar-width: thin;
 }
+.miniaturas-carrossel::-webkit-scrollbar {
+    height: 6px;
+}
+
 .miniaturas-carrossel img {
     width: 110px;
     height: 80px;
