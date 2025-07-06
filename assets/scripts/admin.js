@@ -252,14 +252,52 @@ function editarImovel(imovel) {
     form.descricao.value = imovel.descricao;
     cancelarBtn.style.display = 'inline-block';
 
+    // Limpa previews antigos
+    previewFachada.innerHTML = '';
+    previewCarrossel.innerHTML = '';
+
+    // Guarda as imagens existentes em inputs hidden
+    const oldImagesContainer = document.createElement('div');
+    oldImagesContainer.id = 'old-images';
+    form.appendChild(oldImagesContainer);
+
     // Exibir a fachada (imagem principal)
-    previewFachada.innerHTML = (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${BASE_URL}${imovel.imagem}" style="max-width:120px;max-height:90px;object-fit:cover;">` : '';
+    if (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') {
+        const imgElement = document.createElement('img');
+        imgElement.src = `${BASE_URL}${imovel.imagem}`;
+        imgElement.style.maxWidth = '120px';
+        imgElement.style.maxHeight = '90px';
+        imgElement.style.objectFit = 'cover';
+        previewFachada.appendChild(imgElement);
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'imagem_existente';
+        hiddenInput.value = imovel.imagem;
+        oldImagesContainer.appendChild(hiddenInput);
+    }
+
     // Exibir as demais imagens do carrossel
     if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
-        previewCarrossel.innerHTML = imovel.carrossel.map(img => `<img src="${BASE_URL}${img}" style="max-width:100px;max-height:75px;object-fit:cover;margin:3px;border-radius:6px;">`).join('');
-    } else {
-        previewCarrossel.innerHTML = '';
-    }
+        imovel.carrossel.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `${BASE_URL}${img}`;
+            imgElement.style.maxWidth = '100px';
+            imgElement.style.maxHeight = '75px';
+            imgElement.style.objectFit = 'cover';
+            imgElement.style.margin = '3px';
+            imgElement.style.borderRadius = '6px';
+            previewCarrossel.appendChild(imgElement);
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'carrossel_existente[]';
+            hiddenInput.value = img;
+            oldImagesContainer.appendChild(hiddenInput);
+        });
+    } 
+
+    window.scrollTo(0, 0);
 }
 
 cancelarBtn.onclick = () => {

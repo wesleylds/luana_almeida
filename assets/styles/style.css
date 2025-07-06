@@ -38,7 +38,7 @@ body.dark-mode button:hover, body.dark-mode .btn:hover, body.dark-mode .btn-edit
 body.dark-mode .header-principal {
     background: linear-gradient(90deg, #101217 0%, #181b22 100%) !important;
 }
-
+body {
     background: linear-gradient(120deg, #f6f7fb 0%, #e9ecf3 100%) !important;
     font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
     color: #223 !important;

@@ -167,19 +167,37 @@ app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
 
 // Editar imóvel
 app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
-  const { titulo, descricao, preco, quartos, salas, area_total, area_construida, localizacao, tipo, banheiros, codigo } = req.body;
+  const {
+    titulo, descricao, preco, quartos, salas, area_total, area_construida,
+    localizacao, tipo, banheiros, codigo,
+    'carrossel_existente[]': carrossel_existente_raw
+  } = req.body;
+
   let precoProcessado = null;
   if (preco) {
     let precoLimpo = preco.toString().trim().replace(/\./g, '').replace(',', '.');
     precoProcessado = parseFloat(precoLimpo);
     if (isNaN(precoProcessado)) return res.status(400).json({ error: 'Preço inválido' });
   }
-  let imagem = req.files && req.files[0] ? req.files[0].path : null;
-  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
-  
+
+  // Lógica de Imagens
+  const newFiles = req.files || [];
+  const newImagePaths = newFiles.map(f => f.path);
+
+  // Imagem da fachada (principal)
+  const imagem = newImagePaths.length > 0 ? newImagePaths[0] : null;
+
+  // Imagens do carrossel
+  let carrossel_existente = [];
+  if (carrossel_existente_raw) {
+    carrossel_existente = Array.isArray(carrossel_existente_raw) ? carrossel_existente_raw : [carrossel_existente_raw];
+  }
+  const novasImagensCarrossel = newImagePaths.length > 1 ? newImagePaths.slice(1) : [];
+  const carrossel = [...carrossel_existente, ...novasImagensCarrossel];
+
   const id = parseInt(req.params.id);
   if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  
+
   // Verifica duplicidade de código
   if (codigo) {
     const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1 AND id != $2', [codigo, id]);
@@ -187,6 +205,7 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
       return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
     }
   }
+
   // Atualiza imóvel
   const update = await pool.query(
     `UPDATE imoveis SET
@@ -221,9 +240,9 @@ app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
       id
     ]
   );
+
   if (update.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
   res.json(update.rows[0]);
-
 });
 
 // Deletar imóvel
