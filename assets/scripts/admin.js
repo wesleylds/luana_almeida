@@ -2,6 +2,7 @@
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
 const API_URL = 'https://luana-almeida.onrender.com';
+const ADMIN_TOKEN = 'luanaadmin2024!'; // Substitua pelo valor real do seu ADMIN_TOKEN
 const UPLOAD = '/api/upload';
 const BASE_URL = "https://luana-almeida.onrender.com/uploads/";
 
@@ -107,7 +108,7 @@ function criarCard(imovel) {
     if (editandoId === imovel.id) card.classList.add('editando');
     card.innerHTML = `
         <div style="text-align:center;">
-            ${(imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">` : '<div style="color:#aaa;font-size:12px;">Sem imagem</div>'}
+            ${(imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') ? `<img src="${imovel.imagem.startsWith('http') ? imovel.imagem : BASE_URL + imovel.imagem}" alt="Fachada" style="max-width:120px;max-height:90px;object-fit:cover;background:#f4f4f4;border-radius:8px;">` : '<div style="color:#aaa;font-size:12px;">Sem imagem</div>'}
         </div>
         <h3>🏠 ${imovel.titulo}</h3>
         <p>${imovel.descricao}</p>
@@ -227,7 +228,10 @@ form.onsubmit = async (e) => {
     try {
         const res = await fetch(url, {
             method,
-            body: formData
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${ADMIN_TOKEN}`
+            }
         });
         const data = await res.json();
         if (!res.ok) {
@@ -278,7 +282,7 @@ function editarImovel(imovel) {
 // Exibir a fachada (imagem principal)
     if (imovel.imagem && imovel.imagem !== 'null' && imovel.imagem !== 'undefined' && imovel.imagem !== '') {
         const imgElement = document.createElement('img');
-        imgElement.src = `${BASE_URL}${imovel.imagem}`;
+        imgElement.src = imovel.imagem.startsWith('http') ? imovel.imagem : `${BASE_URL}${imovel.imagem}`;
         imgElement.style.maxWidth = '120px';
         imgElement.style.maxHeight = '90px';
         imgElement.style.objectFit = 'cover';
@@ -296,7 +300,7 @@ function editarImovel(imovel) {
     if (Array.isArray(imovel.carrossel) && imovel.carrossel.length > 0) {
         imovel.carrossel.forEach(img => {
             const imgElement = document.createElement('img');
-            imgElement.src = `${BASE_URL}${img}`;
+            imgElement.src = img.startsWith('http') ? img : `${BASE_URL}${img}`;
             imgElement.style.maxWidth = '100px';
             imgElement.style.maxHeight = '75px';
             imgElement.style.objectFit = 'cover';
@@ -322,7 +326,12 @@ cancelarBtn.onclick = () => {
 async function deletarImovel(id, card) {
     if (!confirm('Tem certeza que deseja excluir este imóvel?')) return;
     try {
-        await fetch(`${API_URL}/imoveis/${id}`, { method: 'DELETE' });
+        await fetch(`${API_URL}/imoveis/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${ADMIN_TOKEN}`
+            }
+        });
         mostrarFeedback('Imóvel excluído com sucesso!');
         animarConfirmacao('🗑️');
         if (card && card.parentNode) card.parentNode.removeChild(card);
@@ -440,7 +449,12 @@ limparTudoBtn.onclick = async () => {
     const res = await fetch(`${API_URL}/imoveis`);
     const imoveis = await res.json();
     for (const imovel of imoveis) {
-        await fetch(`${API_URL}/imoveis/${imovel.id}`, { method: 'DELETE' });
+        await fetch(`${API_URL}/imoveis/${imovel.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${ADMIN_TOKEN}`
+            }
+        });
     }
     mostrarFeedback('Todos os imóveis foram excluídos!');
     animarConfirmacao('🧹');
