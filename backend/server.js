@@ -107,6 +107,10 @@ app.post('/login', (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('API Luana Almeida está online!');
+});
+
 // Middleware global de tratamento de erros
 app.use((err, req, res, next) => {
   console.error('Erro:', err);
