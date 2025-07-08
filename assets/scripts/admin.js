@@ -2,7 +2,7 @@
 // Admin JS - CRUD de imóveis 100% frontend (localStorage) com emojis e feedback
 
 const API_URL = 'https://luana-almeida.onrender.com';
-const ADMIN_TOKEN = 'luanaadmin2024!'; // Substitua pelo valor real do seu ADMIN_TOKEN
+const ADMIN_TOKEN = 'luanaadmin2025'; // Substitua pelo valor real do seu ADMIN_TOKEN
 const UPLOAD = '/api/upload';
 const BASE_URL = "https://luana-almeida.onrender.com/uploads/";
 
