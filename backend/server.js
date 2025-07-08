@@ -32,8 +32,11 @@ const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
   'https://luana-almeida-site.onrender.com',
   'http://localhost:5500',
-  'http://127.0.0.1:5500'
+  'http://127.0.0.1:5500',
 ];
+if (process.env.RAILWAY_URL) {
+  allowedOrigins.push(process.env.RAILWAY_URL);
+}
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
