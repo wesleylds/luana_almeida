@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
   inicializarCarrosseis();
 });
 
+// Certifique-se de importar config.js antes deste script no HTML
 async function carregarImoveisPublico() {
-  const API_URL = 'https://luana-almeida.onrender.com';
+  // API_URL agora vem de config.js
   const lista = document.getElementById('lista-imoveis');
   if (!lista) return;
   

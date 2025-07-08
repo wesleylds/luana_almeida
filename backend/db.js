@@ -1,14 +1,20 @@
 // Conexão automática com o PostgreSQL externo da Render
 const { Pool } = require('pg');
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 const pool = new Pool({
-  user: 'luanauser',
-  host: 'dpg-d1kjn8vdiees73ekjvfg-a.oregon-postgres.render.com',
-  database: 'luanaimoveis',
-  password: 'Q8DnO2IVcBzuoYsHZFNDNQ0zlXxazM3v',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
   ssl: { rejectUnauthorized: false }
 });
+
+if (!process.env.DB_USER || !process.env.DB_HOST || !process.env.DB_NAME || !process.env.DB_PASS) {
+  console.error('ERRO: Variáveis de ambiente do banco de dados não definidas. Verifique seu arquivo .env.');
+  process.exit(1);
+}
 
 // Função para criar a tabela automaticamente se não existir
 async function criarTabelaImoveis() {

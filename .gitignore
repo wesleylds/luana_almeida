@@ -10,6 +10,9 @@ backend/database.sqlite
 # Uploads de imagens (opcional, se não quiser subir para o GitHub)
 backend/uploads/
 
+# Variáveis de ambiente
+.env
+
 # Sistema operacional
 .DS_Store
 Thumbs.db

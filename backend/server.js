@@ -8,6 +8,7 @@ const fs = require('fs');
 const pool = require('./db');
 const { Low } = require('lowdb');
 const { JSONFile } = require('lowdb/node');
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 const dbFile = path.join(__dirname, 'db.json');
 const adapter = new JSONFile(dbFile);
 const db = new Low(adapter, { imoveis: [] });
@@ -53,8 +54,13 @@ app.use((req, res, next) => {
 const uploadFolder = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadFolder)) fs.mkdirSync(uploadFolder);
 
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  console.error('ERRO: Variáveis de ambiente do Cloudinary não definidas. Verifique seu arquivo .env.');
+  process.exit(1);
+}
+
 cloudinary.config({
-  cloud_name: 'dx3ydqsd3',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
@@ -69,6 +75,9 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage });
 
+// Importa as rotas de imóveis
+const imoveisRoutes = require('./routes/imoveis');
+
 // -ww- Weslley Lemos de Sousa
 // Conexão com PostgreSQL
 console.log('Conexão com PostgreSQL configurada!');
@@ -79,225 +88,10 @@ app.use('/uploads', express.static(uploadFolder));
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 app.use(express.static(path.join(__dirname, '..')));
 
-// -ww- Weslley Lemos de Sousa
-// Listar imóveis
-app.get('/imoveis', async (req, res) => {
-  console.log('[GET] /imoveis chamado');
-  const result = await pool.query('SELECT * FROM imoveis ORDER BY id DESC');
-  res.json(result.rows);
-});
+// Usa as rotas de imóveis
+app.use('/imoveis', imoveisRoutes);
 
-// -ww- Weslley Lemos de Sousa
-// Detalhes de um imóvel
-app.get('/imoveis/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  const result = await pool.query('SELECT * FROM imoveis WHERE id = $1', [id]);
-  if (result.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
-  const imovel = result.rows[0];
-  imovel.visitas = (imovel.visitas || 0) + 1;
-  await pool.query('UPDATE imoveis SET visitas = $1 WHERE id = $2', [imovel.visitas, id]);
-  // -ww- Weslley Lemos de Sousa
-// Conversão do carrossel para array
-  if (imovel.carrossel && typeof imovel.carrossel === 'string') {
-    try {
-      imovel.carrossel = JSON.parse(imovel.carrossel);
-    } catch (e) {
-      imovel.carrossel = [];
-    }
-  }
-  res.json(imovel);
-});
-
-// -ww- Weslley Lemos de Sousa
-// Criar imóvel
-app.post('/imoveis', upload.array('imagens', 12), async (req, res) => {
-  console.log('[POST] /imoveis chamado');
-  console.log('req.body:', req.body);
-  console.log('req.files:', req.files);
-  const { titulo, descricao, preco, quartos, salas, area_total, area_construida, localizacao, tipo, banheiros, codigo } = req.body;
-  if (!titulo) return res.status(400).json({ error: 'Título é obrigatório' });
-
-  // -ww- Weslley Lemos de Sousa
-// Validação para imagem obrigatória
-  if (!req.files || req.files.length === 0) {
-    return res.status(400).json({ error: 'Pelo menos uma imagem é obrigatória.' });
-  }
-
-  // -ww- Weslley Lemos de Sousa
-// Garantir que codigo seja string
-  let codigoFinal = Array.isArray(codigo) ? codigo[0] : codigo;
-
-  // -ww- Weslley Lemos de Sousa
-// Conversão segura dos campos numéricos
-  function parseOrNull(val) {
-    if (val === undefined || val === null || val === '') return null;
-    const n = Number(val.toString().replace(/\./g, '').replace(',', '.'));
-    return isNaN(n) ? null : n;
-  }
-
-  let precoProcessado = parseOrNull(preco);
-  let quartosProcessado = parseOrNull(quartos);
-  let salasProcessado = parseOrNull(salas);
-  let areaTotalProcessado = parseOrNull(area_total);
-  let areaConstruidaProcessado = parseOrNull(area_construida);
-  let banheirosProcessado = parseOrNull(banheiros);
-
-  if (!req.files || req.files.length === 0 || !req.files[0].path) {
-    return res.status(400).json({ error: 'Imagem principal obrigatória não enviada!' });
-  }
-  let imagem = req.files[0].path;
-  let carrossel = req.files && req.files.length > 1 ? req.files.slice(1).map(f => f.path) : [];
-  
-  // -ww- Weslley Lemos de Sousa
-// Verifica duplicidade de código
-  const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1', [codigoFinal]);
-  if (check.rows.length > 0) {
-    return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
-  }
-  const insert = await pool.query(
-    `INSERT INTO imoveis (titulo, descricao, preco, imagem, carrossel, quartos, salas, area_total, area_construida, localizacao, tipo, banheiros, codigo, visitas)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,0) RETURNING *`,
-    [
-      titulo,
-      descricao,
-      precoProcessado,
-      imagem,
-      JSON.stringify(carrossel),
-      quartosProcessado,
-      salasProcessado,
-      areaTotalProcessado,
-      areaConstruidaProcessado,
-      localizacao,
-      tipo,
-      banheirosProcessado,
-      codigoFinal
-    ]
-  );
-  res.status(201).json(insert.rows[0]);
-});
-
-// -ww- Weslley Lemos de Sousa
-// Editar imóvel
-app.put('/imoveis/:id', upload.array('imagens', 12), async (req, res) => {
-  const {
-    titulo, descricao, preco, quartos, salas, area_total, area_construida,
-    localizacao, tipo, banheiros, codigo,
-    'carrossel_existente[]': carrossel_existente_raw
-  } = req.body;
-
-  let precoProcessado = null;
-  if (preco) {
-    let precoLimpo = preco.toString().trim().replace(/\./g, '').replace(',', '.');
-    precoProcessado = parseFloat(precoLimpo);
-    if (isNaN(precoProcessado)) return res.status(400).json({ error: 'Preço inválido' });
-  }
-
-  // -ww- Weslley Lemos de Sousa
-// Lógica de Imagens
-  const newFiles = req.files || [];
-  const newImagePaths = newFiles.map(f => f.path);
-
-  // -ww- Weslley Lemos de Sousa
-// Imagem da fachada (principal)
-  const imagem = newImagePaths.length > 0 ? newImagePaths[0] : null;
-
-  // -ww- Weslley Lemos de Sousa
-// Imagens do carrossel
-  let carrossel_existente = [];
-  let carrossel = [];
-  if (carrossel_existente_raw) {
-    if (Array.isArray(carrossel_existente_raw)) {
-      carrossel_existente = carrossel_existente_raw;
-    } else if (typeof carrossel_existente_raw === 'string') {
-      try {
-        carrossel_existente = JSON.parse(carrossel_existente_raw);
-        if (!Array.isArray(carrossel_existente)) carrossel_existente = [carrossel_existente_raw];
-      } catch {
-        carrossel_existente = [carrossel_existente_raw];
-      }
-    }
-    carrossel = carrossel_existente;
-  } else {
-    // -ww- Weslley Lemos de Sousa
-// Buscar o carrossel atual do imóvel no banco
-    const result = await pool.query('SELECT carrossel FROM imoveis WHERE id = $1', [parseInt(req.params.id)]);
-    if (result.rows.length > 0 && result.rows[0].carrossel) {
-      try {
-        carrossel = JSON.parse(result.rows[0].carrossel);
-        if (!Array.isArray(carrossel)) carrossel = [];
-      } catch {
-        carrossel = [];
-      }
-    }
-  }
-  const novasImagensCarrossel = newImagePaths.length > 1 ? newImagePaths.slice(1) : [];
-  if (novasImagensCarrossel.length > 0) {
-    carrossel = [...carrossel, ...novasImagensCarrossel];
-  }
-
-
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-
-  // -ww- Weslley Lemos de Sousa
-// Verifica duplicidade de código
-  if (codigo) {
-    const check = await pool.query('SELECT 1 FROM imoveis WHERE codigo = $1 AND id != $2', [codigo, id]);
-    if (check.rows.length > 0) {
-      return res.status(400).json({ error: 'Já existe um imóvel cadastrado com esse código.' });
-    }
-  }
-
-  // -ww- Weslley Lemos de Sousa
-// Atualiza imóvel
-  const update = await pool.query(
-    `UPDATE imoveis SET
-      titulo = $1,
-      descricao = $2,
-      preco = $3,
-      imagem = COALESCE($4, imagem),
-      carrossel = $5,
-      quartos = $6,
-      salas = $7,
-      area_total = $8,
-      area_construida = $9,
-      localizacao = $10,
-      tipo = $11,
-      banheiros = $12,
-      codigo = $13
-     WHERE id = $14 RETURNING *`,
-    [
-      titulo,
-      descricao,
-      precoProcessado,
-      imagem,
-      JSON.stringify(carrossel),
-      quartos ? parseInt(quartos) : null,
-      salas ? parseInt(salas) : null,
-      area_total ? parseFloat(area_total.toString()) : null,
-      area_construida ? parseFloat(area_construida.toString()) : null,
-      localizacao,
-      tipo,
-      banheiros ? parseInt(banheiros) : null,
-      codigo ? (Array.isArray(codigo) ? codigo[0] : codigo.toString()) : null,
-      id
-    ]
-  );
-
-  if (update.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
-  res.json(update.rows[0]);
-});
-
-// -ww- Weslley Lemos de Sousa
-// Deletar imóvel
-app.delete('/imoveis/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: 'ID inválido' });
-  const del = await pool.query('DELETE FROM imoveis WHERE id = $1 RETURNING id', [id]);
-  if (del.rows.length === 0) return res.status(404).json({ error: 'Imóvel não encontrado' });
-  res.json({ success: true });
-});
+// Rotas de imóveis agora estão em ./routes/imoveis.js
 
 // -ww- Weslley Lemos de Sousa
 // Endpoint de login simples
@@ -308,6 +102,12 @@ app.post('/login', (req, res) => {
   } else {
     return res.status(401).json({ erro: 'Usuário ou senha inválidos' });
   }
+});
+
+// Middleware global de tratamento de erros
+app.use((err, req, res, next) => {
+  console.error('Erro:', err);
+  res.status(500).json({ error: 'Erro interno do servidor.' });
 });
 
 // -ww- Weslley Lemos de Sousa
